@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOSData — Data Infrastructure for AI Systems</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --ink: #1B1207;
+    --char: #2E2110;
+    --char-2: #3A2A15;
+    --amber: #ED8B00;
+    --gold: #FFB020;
+    --tan: #C9B896;
+    --cream: #FBF8F3;
+    --white: #FFFFFF;
+    --line: rgba(255,255,255,0.12);
+    --line-dark: rgba(27,18,7,0.1);
+    --max: 1120px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--ink); background: var(--cream); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, .display { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+  a { color: inherit; text-decoration: none; }
+  section { padding: 92px 0; }
+  .eyebrow { font-size: 13px; font-weight: 600; color: var(--amber); margin-bottom: 12px; }
+  .sec-head { max-width: 640px; margin-bottom: 48px; }
+  .sec-head h2 { font-size: clamp(28px, 3.6vw, 38px); }
+  .sec-head p { color: #5b4d3a; font-size: 16px; margin-top: 14px; }
+
+  /* ---------- NAV ---------- */
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(251,248,243,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line-dark); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { font-family:'Space Grotesk'; font-weight:700; font-size: 20px; display:flex; align-items:center; gap:8px; }
+  .logo .dot { width:8px; height:8px; border-radius:50%; background: var(--amber); }
+  .logo-img { height: 30px; display: block; }
+  .logo-fallback { display: none; align-items: center; gap: 8px; }
+  .navlinks { display:flex; gap: 28px; font-size: 14px; font-weight: 500; }
+  .navlinks a:hover { color: var(--amber); }
+  .nav-right { display:flex; align-items:center; gap: 16px; }
+  .lang-switch { display:flex; border: 1px solid var(--line-dark); border-radius: 100px; overflow: hidden; font-size: 12.5px; font-weight: 700; }
+  .lang-switch button { background: transparent; border: none; padding: 6px 12px; cursor: pointer; color: #8a7a63; font-family: inherit; }
+  .lang-switch button.active { background: var(--ink); color: var(--white); }
+  .navcta { background: var(--ink); color: var(--white); padding: 9px 18px; border-radius: 4px; font-size: 14px; font-weight: 600; }
+  .navcta:hover { background: var(--amber); }
+  @media (max-width: 760px) { .navlinks { display: none; } }
+
+  /* ---------- HERO ---------- */
+  .hero { background: radial-gradient(ellipse 900px 500px at 75% 0%, var(--char-2), var(--ink) 70%); color: var(--white); padding: 96px 0 88px; position: relative; overflow: hidden; }
+  .hero::before, .hero::after { content: ""; position: absolute; width: 46px; height: 46px; border: 1.5px solid rgba(255,176,32,0.5); }
+  .hero::before { top: 40px; right: 40px; border-left: none; border-bottom: none; }
+  .hero::after { bottom: 40px; right: 96px; border-right: none; border-top: none; }
+  .rec { display:inline-flex; align-items:center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 28px; }
+  .rec .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(237,139,0,0.55); } 70% { box-shadow: 0 0 0 8px rgba(237,139,0,0); } 100% { box-shadow: 0 0 0 0 rgba(237,139,0,0); } }
+  .hero h1 { font-size: clamp(36px, 5.2vw, 58px); max-width: 800px; }
+  .hero h1 span { color: var(--gold); }
+  .hero p.lead { font-family: 'Inter'; font-weight: 400; font-size: 18px; color: rgba(255,255,255,0.72); max-width: 540px; margin-top: 22px; }
+  .hero-ctas { display:flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+  .btn-primary { background: var(--amber); color: var(--ink); font-weight: 600; font-size: 15px; padding: 13px 24px; border-radius: 4px; display:inline-block; border: none; cursor: pointer; font-family: inherit; }
+  .btn-primary:hover { background: var(--gold); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,0.28); color: var(--white); font-weight: 600; font-size: 15px; padding: 13px 24px; border-radius: 4px; background: transparent; cursor: pointer; font-family: inherit; }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-dark { border: 1px solid rgba(27,18,7,0.25); color: var(--ink); font-weight: 600; font-size: 15px; padding: 13px 24px; border-radius: 4px; background: transparent; cursor: pointer; font-family: inherit; display:inline-block; }
+  .btn-dark:hover { border-color: var(--amber); color: var(--amber); }
+  .hero-tags { display:flex; gap: 10px; margin-top: 56px; flex-wrap: wrap; }
+  .tag { border: 1px solid var(--line); color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 100px; }
+
+  /* ---------- STAT STRIP ---------- */
+  .stats { background: var(--ink); color: var(--white); border-top: 1px solid var(--line); }
+  .stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); padding: 30px 32px; }
+  .stat { padding: 0 20px; border-left: 1px solid var(--line); }
+  .stat:first-child { border-left: none; }
+  .stat .num { font-family:'Space Grotesk'; font-size: 26px; font-weight: 700; color: var(--gold); }
+  .stat .label { font-size: 12.5px; color: rgba(255,255,255,0.62); margin-top: 4px; }
+  @media (max-width: 800px) { .stats .wrap { grid-template-columns: repeat(2, 1fr); row-gap: 24px; } .stat:nth-child(3) { border-left: none; } }
+
+  /* ---------- SERVICES ---------- */
+  .whatwedo-head-row { display:flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  .services-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+  .services-grid .svc-card { flex: 1 1 260px; }
+  .svc-card { background: var(--white); border: 1px solid rgba(27,18,7,0.08); border-radius: 8px; padding: 32px 28px; }
+  .svc-card .idx { font-family:'Space Grotesk'; font-size: 13px; color: var(--tan); font-weight: 700; }
+  .svc-card h3 { font-size: 21px; margin-top: 14px; }
+  .svc-card p { font-size: 14.5px; color: #5b4d3a; margin-top: 10px; }
+  .svc-card ul { margin-top: 18px; padding-left: 0; list-style: none; }
+  .svc-card li { font-size: 13.5px; color: var(--ink); padding: 8px 0; border-top: 1px solid rgba(27,18,7,0.07); display:flex; gap:8px; }
+  .svc-card li::before { content: "—"; color: var(--amber); flex-shrink:0; }
+
+
+  /* ---------- WHY KOSDATA ---------- */
+  .advantage { background: var(--char); color: var(--white); }
+  .adv-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: start; }
+  .advantage .eyebrow { color: var(--gold); }
+  .advantage .sec-head p { color: rgba(255,255,255,0.65); }
+  .adv-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+  .adv-stat .num { font-family:'Space Grotesk'; font-size: 30px; font-weight:700; color: var(--gold); }
+  .adv-stat .label { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 6px; }
+  .industries { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .industries-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+  .industry-tags { display:flex; gap: 10px; flex-wrap: wrap; }
+  .industry-tag { border: 1px solid rgba(255,176,32,0.35); color: var(--gold); font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 100px; }
+  @media (max-width: 860px) { .adv-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  /* ---------- PIPELINE (5-step timeline) ---------- */
+  .pipeline-steps { display: flex; position: relative; gap: 0; }
+  .pipeline-steps::before { content: ""; position: absolute; top: 22px; left: 0; right: 0; height: 2px; background: rgba(27,18,7,0.12); z-index: 0; }
+  .step-item { flex: 1; position: relative; z-index: 1; padding-right: 18px; }
+  .step-circle {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk'; font-weight: 700; font-size: 16px; margin-bottom: 18px;
+  }
+  .step-item h3 { font-size: 15.5px; }
+  .step-item p { font-size: 13px; color: #5b4d3a; margin-top: 7px; line-height: 1.5; }
+  @media (max-width: 860px) {
+    .pipeline-steps { flex-direction: column; gap: 28px; }
+    .pipeline-steps::before { top: 0; bottom: 0; left: 21px; right: auto; width: 2px; height: auto; }
+    .step-item { display: flex; gap: 18px; padding-right: 0; }
+    .step-circle { margin-bottom: 0; flex-shrink: 0; }
+  }
+  .pipe-note { margin-top: 40px; border: 1px dashed rgba(27,18,7,0.2); border-radius: 8px; padding: 20px 24px; font-size: 14.5px; color: #5b4d3a; }
+  .pipe-note strong { color: var(--ink); }
+
+  /* ---------- CASE STUDIES (horizontal carousel) ---------- */
+  .case-carousel-wrap { position: relative; }
+  .case-track {
+    display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding-bottom: 8px; scrollbar-width: none;
+  }
+  .case-track::-webkit-scrollbar { display: none; }
+  .case-card {
+    background: var(--white); border: 1px solid rgba(27,18,7,0.08); border-radius: 8px; overflow: hidden;
+    scroll-snap-align: start; flex: 0 0 88%; max-width: 640px;
+  }
+  .case-img { width: 100%; height: 220px; object-fit: cover; display: block; background: var(--tan); }
+  .case-body { padding: 28px 32px 32px; }
+  .case-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: var(--amber); }
+  .case-card h3 { font-size: 20px; margin-top: 12px; }
+  .case-card p { font-size: 14.5px; color: #5b4d3a; margin-top: 12px; }
+  .case-stats { display:flex; gap: 28px; margin-top: 22px; padding-top: 20px; border-top: 1px solid rgba(27,18,7,0.08); }
+  .case-stat .num { font-family:'Space Grotesk'; font-size: 22px; font-weight: 700; color: var(--ink); }
+  .case-stat .label { font-size: 12px; color: #8a7a63; margin-top: 4px; }
+  .case-nav { display:flex; gap: 10px; justify-content:flex-end; margin-bottom: 20px; }
+  .case-nav button {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(27,18,7,0.15);
+    background: var(--white); cursor: pointer; font-size: 16px; color: var(--ink);
+  }
+  .case-nav button:hover { border-color: var(--amber); color: var(--amber); }
+  @media (min-width: 761px) { .case-card { flex: 0 0 46%; } }
+
+  /* ---------- CTA + FORM ---------- */
+  .cta { background: radial-gradient(ellipse 700px 400px at 30% 30%, var(--char-2), var(--ink) 75%); color: var(--white); }
+  .cta-head { text-align: center; max-width: 620px; margin: 0 auto 48px; }
+  .cta-head h2 { font-size: clamp(28px, 4vw, 42px); }
+  .cta-head p { color: rgba(255,255,255,0.65); margin-top: 16px; }
+  .lead-form { max-width: 640px; margin: 0 auto; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 10px; padding: 36px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { margin-bottom: 18px; }
+  .form-field label { display:block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.75); margin-bottom: 7px; }
+  .form-field input, .form-field textarea {
+    width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--line); border-radius: 5px;
+    padding: 11px 13px; color: var(--white); font-family: inherit; font-size: 14.5px;
+  }
+  .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .form-field input:focus, .form-field textarea:focus { outline: none; border-color: var(--gold); }
+  .form-field textarea { resize: vertical; min-height: 90px; }
+  .form-submit { width: 100%; margin-top: 6px; padding: 14px; font-size: 15px; }
+  .form-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 14px; text-align: center; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+  /* ---------- FOOTER ---------- */
+  footer { background: var(--ink); color: rgba(255,255,255,0.55); padding: 56px 0 28px; font-size: 13.5px; }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+  .footer-brand .logo { color: var(--white); margin-bottom: 12px; }
+  .footer-brand p { color: rgba(255,255,255,0.5); max-width: 280px; line-height: 1.6; }
+  .footer-col h4 { font-size: 12.5px; color: rgba(255,255,255,0.8); font-weight: 600; margin-bottom: 14px; letter-spacing: 0.02em; }
+  .footer-col div { margin-bottom: 9px; }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-social { display:flex; gap: 12px; margin-top: 14px; }
+  .footer-social a { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; display:flex; align-items:center; justify-content:center; font-size: 12px; }
+  .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-bottom { display:flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 24px; font-size: 12.5px; color: rgba(255,255,255,0.4); }
+  @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+  @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo">
+      <!-- Replace logo.png with your real logo (SVG/PNG, ~30px tall). Falls back to text mark automatically if missing. -->
+      <img src="logo.png" alt="KOSData" class="logo-img" onerror="var w=this.closest('.logo'); this.remove(); w.querySelector('.logo-fallback').style.display='flex'">
+      <span class="logo-fallback"><span class="dot"></span>KOSData</span>
+    </a>
+    <div class="navlinks">
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#advantage" data-i18n="nav.why">Why KOSData</a>
+      <a href="#pipeline" data-i18n="nav.pipeline">How We Work</a>
+      <a href="#cases" data-i18n="nav.cases">Case Studies</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <button id="lang-en" class="active" onclick="setLang('en')">EN</button>
+        <button id="lang-vi" onclick="setLang('vi')">VI</button>
+      </div>
+      <a class="navcta" href="#contact" data-i18n="nav.cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="rec"><span class="pulse"></span><span data-i18n="hero.eyebrow">DATA INFRASTRUCTURE FOR AI SYSTEMS</span></div>
+    <h1 data-i18n="hero.headline">Power your AI systems with <span>real‑world data, at scale.</span></h1>
+    <p class="lead" data-i18n="hero.sub">KOSData collects, annotates and packages high-fidelity human &amp; environment data into model-ready datasets — so your team trains faster, instead of chasing footage.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#contact" data-i18n="hero.cta1">Scope a Pilot</a>
+    </div>
+    <div class="hero-tags">
+      <span class="tag" data-i18n="hero.tag1">Data Collection</span>
+      <span class="tag" data-i18n="hero.tag2">Data Annotation</span>
+      <span class="tag" data-i18n="hero.tag3">AI Training Datasets</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STATS ============ -->
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="num">120+</div><div class="label" data-i18n="stats.label1">Projects delivered</div></div>
+    <div class="stat"><div class="num">500+</div><div class="label" data-i18n="stats.label2">Trained technical specialists</div></div>
+    <div class="stat"><div class="num">5,000+</div><div class="label" data-i18n="stats.label3">Data collaborators nationwide</div></div>
+    <div class="stat"><div class="num">98%</div><div class="label" data-i18n="stats.label4">Client satisfaction rate</div></div>
+  </div>
+</div>
+
+<!-- ============ WHAT WE DO ============ -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow" data-i18n="whatwedo.eyebrow">What we do</div>
+      <h2 data-i18n="whatwedo.title">Everything you need, in one place.</h2>
+      <p data-i18n="whatwedo.sub">Three integrated services built to unlock the full potential of your training pipeline — from raw capture to a licensable dataset.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card">
+        <div class="idx">01</div>
+        <h3 data-i18n="svc1.title">Data Collection</h3>
+        <p data-i18n="svc1.desc">Field-ready capture across every viewpoint your model needs — filmed onsite, in-studio, or through our APAC collector network.</p>
+        <ul>
+          <li data-i18n="svc1.b1">Up to 4K/60fps synced multi-camera capture</li>
+          <li data-i18n="svc1.b2">Real operating environments, not staged sets</li>
+          <li data-i18n="svc1.b3">Consent &amp; compliance handled on-site</li>
+        </ul>
+      </div>
+      <div class="svc-card">
+        <div class="idx">02</div>
+        <h3 data-i18n="svc2.title">Data Annotation</h3>
+        <p data-i18n="svc2.desc">A QA-approved labeling workflow across six modalities, tuned for the precision robotics and computer vision teams need.</p>
+        <ul>
+          <li data-i18n="svc2.b1">Image, video, audio, text, 3D &amp; document labeling</li>
+          <li data-i18n="svc2.b2">Multi-stage QA with tracked inter-annotator agreement</li>
+          <li data-i18n="svc2.b3">Delivered in COCO / YOLO / VOC-ready formats</li>
+        </ul>
+      </div>
+      <div class="svc-card">
+        <div class="idx">03</div>
+        <h3 data-i18n="svc3.title">AI Training Datasets</h3>
+        <p data-i18n="svc3.desc">Pre-built or custom-commissioned datasets, documented and packaged so they can be licensed again and again.</p>
+        <ul>
+          <li data-i18n="svc3.b1">Covers robotics, computer vision, speech &amp; language</li>
+          <li data-i18n="svc3.b2">Ready-to-train HDF5/RLDS, COCO, YOLO, JSON exports</li>
+          <li data-i18n="svc3.b3">Full documentation on specs, consent &amp; quality metrics</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:40px">
+      <a class="btn-dark" href="#pipeline" data-i18n="whatwedo.explore">Explore Our Capabilities</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY KOSDATA ============ -->
+<section class="advantage" id="advantage">
+  <div class="wrap">
+    <div class="adv-grid">
+      <div>
+        <div class="eyebrow" data-i18n="advantage.eyebrow">Why KOSData</div>
+        <h2 data-i18n="advantage.title">Our history is the advantage.</h2>
+        <p data-i18n="advantage.body">KOSData is the newest line inside KOS — twenty years of workforce and manufacturing-staffing operations across Vietnam. That track record means rapid scale-up, nationwide reach, and teams who already understand the industries AI needs data from most.</p>
+      </div>
+      <div class="adv-stats">
+        <div class="adv-stat"><div class="num">20+</div><div class="label" data-i18n="advantage.stat1">Years across top AI-powering fields</div></div>
+        <div class="adv-stat"><div class="num">08</div><div class="label" data-i18n="advantage.stat2">Branches across Northern Vietnam</div></div>
+        <div class="adv-stat"><div class="num">250,000+</div><div class="label" data-i18n="advantage.stat3">Members in KOS's social communities</div></div>
+        <div class="adv-stat"><div class="num">100+</div><div class="label" data-i18n="advantage.stat4">Recruitment collaborators &amp; vendors</div></div>
+      </div>
+    </div>
+    <div class="industries">
+      <div class="industries-title" data-i18n="advantage.industriesTitle">Already active in the industries driving AI adoption</div>
+      <div class="industry-tags">
+        <span class="industry-tag" data-i18n="industry.1">Manufacturing &amp; Assembly</span>
+        <span class="industry-tag" data-i18n="industry.2">Banking &amp; Financial Services</span>
+        <span class="industry-tag" data-i18n="industry.3">Retail &amp; Consumer Services</span>
+        <span class="industry-tag" data-i18n="industry.4">Logistics &amp; Warehousing</span>
+        <span class="industry-tag" data-i18n="industry.5">Hospitality &amp; Hotel Operations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIPELINE ============ -->
+<section id="pipeline">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow" data-i18n="pipeline.eyebrow">How we work</div>
+      <h2 data-i18n="pipeline.title">From brief to delivery in five steps.</h2>
+      <p data-i18n="pipeline.sub">A repeatable, quality-controlled structure that scales from a 500-hour pilot to a 50,000-hour production program.</p>
+    </div>
+    <div class="pipeline-steps">
+      <div class="step-item">
+        <div class="step-circle">1</div>
+        <h3 data-i18n="pipeline.step1title">Specification</h3>
+        <p data-i18n="pipeline.step1desc">Model requirements translated into a capture or annotation spec — configuration, task scripts, diversity matrix, delivery format.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">2</div>
+        <h3 data-i18n="pipeline.step2title">Protocol Design</h3>
+        <p data-i18n="pipeline.step2desc">Hardware setup, guidelines, participant/consent flows and QA checklists built before execution starts.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">3</div>
+        <h3 data-i18n="pipeline.step3title">Execution</h3>
+        <p data-i18n="pipeline.step3desc">Domain-trained operators and annotators run the program, with daily progress reports and sample batches for review.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">4</div>
+        <h3 data-i18n="pipeline.step4title">QA Review</h3>
+        <p data-i18n="pipeline.step4desc">Multi-stage review by domain-trained QA engineers — consistency, quality, diversity and compliance.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">5</div>
+        <h3 data-i18n="pipeline.step5title">Delivery</h3>
+        <p data-i18n="pipeline.step5desc">Dataset delivered in your preferred format, with documentation covering specs, consent and quality metrics.</p>
+      </div>
+    </div>
+    <div class="pipe-note">
+      <strong data-i18n="pipeline.noteStrong">Need only part of the process?</strong> <span data-i18n="pipeline.noteText">Every stage above can stand alone — from workforce and location sourcing to production and final QA — KOS slots into wherever you need extra capacity, full pipeline or a single service.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE STUDIES ============ -->
+<section id="cases" style="background:var(--white)">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:24px">
+      <div class="eyebrow" data-i18n="cases.eyebrow">Proof of execution</div>
+      <h2 data-i18n="cases.title">Proof from KOS's own track record.</h2>
+    </div>
+    <div class="case-carousel-wrap">
+      <div class="case-nav">
+        <button type="button" aria-label="Previous" onclick="document.getElementById('case-track').scrollBy({left:-400,behavior:'smooth'})">‹</button>
+        <button type="button" aria-label="Next" onclick="document.getElementById('case-track').scrollBy({left:400,behavior:'smooth'})">›</button>
+      </div>
+      <div class="case-track" id="case-track">
+        <div class="case-card">
+          <!-- Replace with a real project photo -->
+          <img class="case-img" src="https://placehold.co/640x440/2E2110/FFB020?text=Hospitality+Staffing" alt="Hospitality staffing case study">
+          <div class="case-body">
+            <div class="case-tag" data-i18n="case1.tag">CASE STUDY · HOSPITALITY STAFFING</div>
+            <h3 data-i18n="case1.title">Hotel operations workforce deployment (2026)</h3>
+            <p data-i18n="case1.desc">KOS recruited, trained and deployed front-of-house, housekeeping and F&amp;B staff for Accor-standard luxury hotels — the same sourcing engine that can staff a large hospitality data-capture program just as fast.</p>
+            <div class="case-stats">
+              <div class="case-stat"><div class="num">800+</div><div class="label" data-i18n="case1.stat1">Staff deployed</div></div>
+              <div class="case-stat"><div class="num">06</div><div class="label" data-i18n="case1.stat2">Properties covered</div></div>
+              <div class="case-stat"><div class="num">87%</div><div class="label" data-i18n="case1.stat3">Fill rate</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <!-- Replace with a real project photo -->
+          <img class="case-img" src="https://placehold.co/640x440/2E2110/FFB020?text=Manufacturing+Staffing" alt="Manufacturing staffing case study">
+          <div class="case-body">
+            <div class="case-tag" data-i18n="case2.tag">CASE STUDY · MANUFACTURING STAFFING</div>
+            <h3 data-i18n="case2.title">Manufacturing workforce supply (2024)</h3>
+            <p data-i18n="case2.desc">KOS sourced and managed line manufacturing labor for top FDI and Vietnamese producers across EV vehicles, electronics, F&amp;B and textile production.</p>
+            <div class="case-stats">
+              <div class="case-stat"><div class="num">12,500+</div><div class="label" data-i18n="case2.stat1">Workers mobilized</div></div>
+              <div class="case-stat"><div class="num">25</div><div class="label" data-i18n="case2.stat2">Production lines</div></div>
+              <div class="case-stat"><div class="num">03</div><div class="label" data-i18n="case2.stat3">Weeks to full staffing</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA + LEAD FORM ============ -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="cta-head">
+      <h2 data-i18n="cta.title">Ready to power your next AI system?</h2>
+      <p data-i18n="cta.sub">Tell us your brief — we'll scope a pilot within days.</p>
+    </div>
+
+    <!-- If hosted on Netlify, this form is auto-detected and captured (data-netlify + hidden form-name field). -->
+    <form class="lead-form" name="kosdata-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="kosdata-contact">
+      <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label data-i18n="form.name">Your name</label>
+          <input type="text" name="name" data-i18n-ph="form.namePh" placeholder="Nguyen Van A" required>
+        </div>
+        <div class="form-field">
+          <label data-i18n="form.company">Your company</label>
+          <input type="text" name="company" data-i18n-ph="form.companyPh" placeholder="Your company" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label data-i18n="form.email">Work email</label>
+          <input type="email" name="email" data-i18n-ph="form.emailPh" placeholder="you@company.com" required>
+        </div>
+        <div class="form-field">
+          <label data-i18n="form.phone">Phone (optional)</label>
+          <input type="tel" name="phone" data-i18n-ph="form.phonePh" placeholder="+84 ...">
+        </div>
+      </div>
+      <div class="form-field">
+        <label data-i18n="form.message">Tell us about your project</label>
+        <textarea name="message" data-i18n-ph="form.messagePh" placeholder="Data type, volume, timeline, target use case..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary form-submit" data-i18n="form.submit">Send Brief</button>
+      <div class="form-note" data-i18n="form.note">We typically respond within 1–2 business days.</div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <img src="logo.png" alt="KOSData" class="logo-img" style="filter:brightness(0) invert(1)" onerror="var w=this.closest('.logo'); this.remove(); w.querySelector('.logo-fallback').style.display='flex'">
+          <span class="logo-fallback" style="display:none"><span class="dot"></span>KOSData</span>
+        </a>
+        <p data-i18n="footer.tagline">A data infrastructure line by KOS — high-fidelity real-world data for robots and intelligent machines.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contactTitle">Contact</h4>
+        <div><a href="mailto:hello@kosdata.com">hello@kosdata.com</a></div>
+        <div><a href="tel:+84000000000">+84 (0) 00 000 0000</a></div>
+        <div data-i18n="footer.hq">Hanoi, Vietnam</div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.branchesTitle">Branches</h4>
+        <div>Ha Noi · Hai Phong · Hung Yen</div>
+        <div>Vinh Phuc · Nghe An · Thai Binh · Hoa Binh</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div data-i18n="footer.copyright">© 2026 KOSData. All rights reserved.</div>
+      <div data-i18n="footer.line2">A workforce &amp; production company, purpose-built for AI training data.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const trans = {
+  en: {
+    "nav.services": "Services",
+    "nav.why": "Why KOSData",
+    "nav.pipeline": "How We Work",
+    "nav.cases": "Case Studies",
+    "nav.cta": "Get in touch",
+    "hero.eyebrow": "DATA INFRASTRUCTURE FOR AI SYSTEMS",
+    "hero.headline": "Power your AI systems with <span>real\u2011world data, at scale.</span>",
+    "hero.sub": "KOSData collects, annotates and packages high-fidelity human &amp; environment data into model-ready datasets \u2014 so your team trains faster, instead of chasing footage.",
+    "hero.cta1": "Scope a Pilot",
+    "hero.tag1": "Data Collection",
+    "hero.tag2": "Data Annotation",
+    "hero.tag3": "AI Training Datasets",
+    "stats.label1": "Projects delivered",
+    "stats.label2": "Trained technical specialists",
+    "stats.label3": "Data collaborators nationwide",
+    "stats.label4": "Client satisfaction rate",
+    "whatwedo.eyebrow": "What we do",
+    "whatwedo.title": "Everything you need, in one place.",
+    "whatwedo.sub": "Three integrated services built to unlock the full potential of your training pipeline \u2014 from raw capture to a licensable dataset.",
+    "whatwedo.explore": "Explore Our Capabilities",
+    "svc1.title": "Data Collection",
+    "svc1.desc": "Field-ready capture across every viewpoint your model needs \u2014 filmed onsite, in-studio, or through our APAC collector network.",
+    "svc1.b1": "Up to 4K/60fps synced multi-camera capture",
+    "svc1.b2": "Real operating environments, not staged sets",
+    "svc1.b3": "Consent &amp; compliance handled on-site",
+    "svc2.title": "Data Annotation",
+    "svc2.desc": "A QA-approved labeling workflow across six modalities, tuned for the precision robotics and computer vision teams need.",
+    "svc2.b1": "Image, video, audio, text, 3D &amp; document labeling",
+    "svc2.b2": "Multi-stage QA with tracked inter-annotator agreement",
+    "svc2.b3": "Delivered in COCO / YOLO / VOC-ready formats",
+    "svc3.title": "AI Training Datasets",
+    "svc3.desc": "Pre-built or custom-commissioned datasets, documented and packaged so they can be licensed again and again.",
+    "svc3.b1": "Covers robotics, computer vision, speech &amp; language",
+    "svc3.b2": "Ready-to-train HDF5/RLDS, COCO, YOLO, JSON exports",
+    "svc3.b3": "Full documentation on specs, consent &amp; quality metrics",
+    "advantage.eyebrow": "Why KOSData",
+    "advantage.title": "Our history is the advantage.",
+    "advantage.body": "KOSData is the newest line inside KOS \u2014 twenty years of workforce and manufacturing-staffing operations across Vietnam. That track record means rapid scale-up, nationwide reach, and teams who already understand the industries AI needs data from most.",
+    "advantage.industriesTitle": "Already active in the industries driving AI adoption",
+    "industry.1": "Manufacturing &amp; Assembly",
+    "industry.2": "Banking &amp; Financial Services",
+    "industry.3": "Retail &amp; Consumer Services",
+    "industry.4": "Logistics &amp; Warehousing",
+    "industry.5": "Hospitality &amp; Hotel Operations",
+    "advantage.stat1": "Years across top AI-powering fields",
+    "advantage.stat2": "Branches across Northern Vietnam",
+    "advantage.stat3": "Members in KOS's social communities",
+    "advantage.stat4": "Recruitment collaborators &amp; vendors",
+    "pipeline.eyebrow": "How we work",
+    "pipeline.title": "From brief to delivery in five steps.",
+    "pipeline.sub": "A repeatable, quality-controlled structure that scales from a 500-hour pilot to a 50,000-hour production program.",
+    "pipeline.step1title": "Specification",
+    "pipeline.step1desc": "Model requirements translated into a capture or annotation spec \u2014 configuration, task scripts, diversity matrix, delivery format.",
+    "pipeline.step2title": "Protocol Design",
+    "pipeline.step2desc": "Hardware setup, guidelines, participant/consent flows and QA checklists built before execution starts.",
+    "pipeline.step3title": "Execution",
+    "pipeline.step3desc": "Domain-trained operators and annotators run the program, with daily progress reports and sample batches for review.",
+    "pipeline.step4title": "QA Review",
+    "pipeline.step4desc": "Multi-stage review by domain-trained QA engineers \u2014 consistency, quality, diversity and compliance.",
+    "pipeline.step5title": "Delivery",
+    "pipeline.step5desc": "Dataset delivered in your preferred format, with documentation covering specs, consent and quality metrics.",
+    "pipeline.noteStrong": "Need only part of the process?",
+    "pipeline.noteText": "Every stage above can stand alone \u2014 from workforce and location sourcing to production and final QA \u2014 KOS slots into wherever you need extra capacity, full pipeline or a single service.",
+    "cases.eyebrow": "Proof of execution",
+    "cases.title": "Proof from KOS's own track record.",
+    "cases.sub": "Two representative engagements show the same mobilization playbook now powering KOSData's capture programs.",
+    "case1.tag": "CASE STUDY \u00b7 HOSPITALITY STAFFING",
+    "case1.title": "Hotel operations workforce deployment (2026)",
+    "case1.desc": "KOS recruited, trained and deployed front-of-house, housekeeping and F&amp;B staff for Accor-standard luxury hotels \u2014 the same sourcing engine that can staff a large hospitality data-capture program just as fast.",
+    "case1.stat1": "Staff deployed",
+    "case1.stat2": "Properties covered",
+    "case1.stat3": "Fill rate",
+    "case2.tag": "CASE STUDY \u00b7 MANUFACTURING STAFFING",
+    "case2.title": "Manufacturing workforce supply (2024)",
+    "case2.desc": "KOS sourced and managed line manufacturing labor for top FDI and Vietnamese producers across EV vehicles, electronics, F&amp;B and textile production.",
+    "case2.stat1": "Workers mobilized",
+    "case2.stat2": "Production lines",
+    "case2.stat3": "Weeks to full staffing",
+    "cta.title": "Ready to power your next AI system?",
+    "cta.sub": "Tell us your brief \u2014 we'll scope a pilot within days.",
+    "form.name": "Your name",
+    "form.namePh": "Nguyen Van A",
+    "form.company": "Your company",
+    "form.companyPh": "Your company",
+    "form.email": "Work email",
+    "form.emailPh": "you@company.com",
+    "form.phone": "Phone (optional)",
+    "form.phonePh": "+84 ...",
+    "form.message": "Tell us about your project",
+    "form.messagePh": "Data type, volume, timeline, target use case...",
+    "form.submit": "Send Brief",
+    "form.note": "We typically respond within 1\u20132 business days.",
+    "footer.tagline": "A data infrastructure line by KOS \u2014 high-fidelity real-world data for robots and intelligent machines.",
+    "footer.contactTitle": "Contact",
+    "footer.hq": "Hanoi, Vietnam",
+    "footer.branchesTitle": "Branches",
+    "footer.copyright": "\u00a9 2026 KOSData. All rights reserved.",
+    "footer.line2": "A workforce &amp; production company, purpose-built for AI training data."
+  },
+  vi: {
+    "nav.services": "Dịch vụ",
+    "nav.why": "Vì sao chọn KOSData",
+    "nav.pipeline": "Quy trình",
+    "nav.cases": "Case Study",
+    "nav.cta": "Liên hệ ngay",
+    "hero.eyebrow": "HẠ TẦNG DỮ LIỆU CHO HỆ THỐNG AI",
+    "hero.headline": "Tiếp sức cho hệ thống AI của bạn bằng <span>dữ liệu thực tế, ở quy mô lớn.</span>",
+    "hero.sub": "KOSData thu thập, gán nhãn và đóng gói dữ liệu con người &amp; môi trường chất lượng cao thành bộ dữ liệu sẵn sàng huấn luyện \u2014 để đội ngũ của bạn tập trung huấn luyện mô hình, không phải chạy theo dữ liệu.",
+    "hero.cta1": "Lên Kế Hoạch Pilot",
+    "hero.tag1": "Thu Thập Dữ Liệu",
+    "hero.tag2": "Gán Nhãn Dữ Liệu",
+    "hero.tag3": "Bộ Dữ Liệu Huấn Luyện AI",
+    "stats.label1": "Dự án đã triển khai",
+    "stats.label2": "Chuyên viên kỹ thuật đã đào tạo",
+    "stats.label3": "Cộng tác viên cung cấp dữ liệu trên toàn quốc",
+    "stats.label4": "Tỷ lệ hài lòng của khách hàng",
+    "whatwedo.eyebrow": "Chúng tôi làm gì",
+    "whatwedo.title": "Tất cả những gì bạn cần, trong một nơi duy nhất.",
+    "whatwedo.sub": "Ba dịch vụ được tích hợp chặt chẽ để mở khóa toàn bộ tiềm năng của pipeline huấn luyện \u2014 từ thu thập dữ liệu thô đến bộ dữ liệu có thể cấp phép.",
+    "whatwedo.explore": "Khám Phá Năng Lực Của Chúng Tôi",
+    "svc1.title": "Thu Thập Dữ Liệu",
+    "svc1.desc": "Thu thập tận hiện trường ở mọi góc nhìn mô hình của bạn cần \u2014 quay tại chỗ, trong studio, hoặc qua mạng lưới cộng tác viên khắp APAC.",
+    "svc1.b1": "Quay đồng bộ đa camera, độ phân giải lên đến 4K/60fps",
+    "svc1.b2": "Bối cảnh vận hành thực tế, không phải dàn dựng",
+    "svc1.b3": "Xử lý đồng thuận &amp; tuân thủ ngay tại hiện trường",
+    "svc2.title": "Gán Nhãn Dữ Liệu",
+    "svc2.desc": "Quy trình gán nhãn được kiểm soát chất lượng trên sáu loại dữ liệu, tối ưu cho độ chính xác mà các đội robotics và computer vision cần.",
+    "svc2.b1": "Gán nhãn ảnh, video, âm thanh, văn bản, 3D &amp; tài liệu",
+    "svc2.b2": "QA nhiều tầng, theo dõi độ đồng thuận giữa người gán nhãn",
+    "svc2.b3": "Giao theo định dạng sẵn sàng COCO / YOLO / VOC",
+    "svc3.title": "Bộ Dữ Liệu Huấn Luyện AI",
+    "svc3.desc": "Bộ dữ liệu dựng sẵn hoặc đặt hàng riêng, được lập tài liệu và đóng gói để có thể cấp phép sử dụng nhiều lần.",
+    "svc3.b1": "Phục vụ robotics, computer vision, giọng nói &amp; ngôn ngữ",
+    "svc3.b2": "Sẵn sàng huấn luyện: HDF5/RLDS, COCO, YOLO, JSON",
+    "svc3.b3": "Tài liệu đầy đủ về thông số, đồng thuận &amp; chỉ số chất lượng",
+    "advantage.eyebrow": "Vì sao chọn KOSData",
+    "advantage.title": "Lịch sử của chúng tôi chính là lợi thế.",
+    "advantage.body": "KOSData là dòng dịch vụ mới nhất của KOS \u2014 kế thừa 20 năm vận hành nhân sự và cung ứng lao động sản xuất trên khắp Việt Nam. Nền tảng đó mang lại khả năng mở rộng nhanh, hiện diện trên toàn quốc, và đội ngũ đã am hiểu sẵn những ngành mà dữ liệu AI cần nhất.",
+    "advantage.industriesTitle": "Đã hoạt động trong chính những ngành đang dẫn đầu làn sóng ứng dụng AI",
+    "industry.1": "Sản Xuất &amp; Lắp Ráp",
+    "industry.2": "Ngân Hàng &amp; Dịch Vụ Tài Chính",
+    "industry.3": "Bán Lẻ &amp; Dịch Vụ Tiêu Dùng",
+    "industry.4": "Logistics &amp; Kho Vận",
+    "industry.5": "Khách Sạn &amp; Dịch Vụ Lưu Trú",
+    "advantage.stat1": "Năm kinh nghiệm trong các ngành dẫn đầu về AI",
+    "advantage.stat2": "Chi nhánh khắp miền Bắc Việt Nam",
+    "advantage.stat3": "Thành viên trong cộng đồng của KOS",
+    "advantage.stat4": "Đối tác &amp; cộng tác viên tuyển dụng",
+    "pipeline.eyebrow": "Cách chúng tôi vận hành",
+    "pipeline.title": "Từ yêu cầu đến bàn giao trong 5 bước.",
+    "pipeline.sub": "Một quy trình lặp lại được, kiểm soát chất lượng chặt chẽ — mở rộng được từ pilot 500 giờ đến chương trình sản xuất 50.000 giờ.",
+    "pipeline.step1title": "Đặc Tả Yêu Cầu",
+    "pipeline.step1desc": "Chuyển yêu cầu mô hình thành đặc tả thu thập/gán nhãn cụ thể \u2014 cấu hình, kịch bản tác vụ, ma trận đa dạng, định dạng bàn giao.",
+    "pipeline.step2title": "Thiết Kế Quy Trình",
+    "pipeline.step2desc": "Chuẩn bị thiết bị, hướng dẫn, quy trình đồng thuận người tham gia và checklist QA trước khi bắt đầu triển khai.",
+    "pipeline.step3title": "Triển Khai",
+    "pipeline.step3desc": "Đội vận hành và gán nhãn được đào tạo chuyên sâu thực hiện chương trình, có báo cáo tiến độ hằng ngày và mẫu để rà soát.",
+    "pipeline.step4title": "Kiểm Duyệt QA",
+    "pipeline.step4desc": "Rà soát nhiều tầng bởi kỹ sư QA chuyên sâu \u2014 tính nhất quán, chất lượng, độ đa dạng và tuân thủ.",
+    "pipeline.step5title": "Bàn Giao",
+    "pipeline.step5desc": "Bàn giao bộ dữ liệu theo định dạng bạn cần, kèm tài liệu về thông số, đồng thuận và chỉ số chất lượng.",
+    "pipeline.noteStrong": "Chỉ cần một phần của quy trình?",
+    "pipeline.noteText": "Mỗi giai đoạn trên đều có thể tách riêng \u2014 từ tìm nguồn nhân sự, địa điểm đến sản xuất và QA cuối cùng \u2014 KOS đảm nhận đúng phần bạn cần thêm năng lực, dù trọn gói hay từng dịch vụ riêng lẻ.",
+    "cases.eyebrow": "Minh chứng năng lực",
+    "cases.title": "Minh chứng từ chính năng lực thực thi của KOS.",
+    "cases.sub": "Hai dự án tiêu biểu cho thấy cùng một quy trình huy động nhân sự hiện đang vận hành các chương trình thu thập dữ liệu của KOSData.",
+    "case1.tag": "CASE STUDY \u00b7 NHÂN SỰ KHÁCH SẠN",
+    "case1.title": "Triển khai nhân sự vận hành khách sạn (2026)",
+    "case1.desc": "KOS tuyển dụng, đào tạo và triển khai nhân sự lễ tân, buồng phòng và F&amp;B cho chuỗi khách sạn cao cấp chuẩn Accor \u2014 cùng bộ máy tuyển dụng có thể huy động nhanh cho một chương trình thu thập dữ liệu ngành khách sạn quy mô lớn.",
+    "case1.stat1": "Nhân sự đã triển khai",
+    "case1.stat2": "Cơ sở được phục vụ",
+    "case1.stat3": "Tỷ lệ lấp đầy",
+    "case2.tag": "CASE STUDY \u00b7 NHÂN SỰ SẢN XUẤT",
+    "case2.title": "Cung ứng nhân lực sản xuất (2024)",
+    "case2.desc": "KOS tìm nguồn và quản lý lao động dây chuyền cho các nhà sản xuất FDI và Việt Nam hàng đầu trong lĩnh vực xe điện, điện tử, F&amp;B và dệt may.",
+    "case2.stat1": "Lao động đã huy động",
+    "case2.stat2": "Dây chuyền sản xuất",
+    "case2.stat3": "Tuần để hoàn tất tuyển dụng",
+    "cta.title": "Sẵn sàng tiếp sức cho hệ thống AI tiếp theo của bạn?",
+    "cta.sub": "Chia sẻ yêu cầu của bạn \u2014 chúng tôi sẽ lên kế hoạch pilot chỉ trong vài ngày.",
+    "form.name": "Tên của bạn",
+    "form.namePh": "Nguyễn Văn A",
+    "form.company": "Công ty của bạn",
+    "form.companyPh": "Tên công ty của bạn",
+    "form.email": "Email công việc",
+    "form.emailPh": "ban@congty.com",
+    "form.phone": "Số điện thoại (không bắt buộc)",
+    "form.phonePh": "+84 ...",
+    "form.message": "Chia sẻ về dự án của bạn",
+    "form.messagePh": "Loại dữ liệu, khối lượng, thời gian, mục tiêu sử dụng...",
+    "form.submit": "Gửi Yêu Cầu",
+    "form.note": "Chúng tôi thường phản hồi trong vòng 1\u20132 ngày làm việc.",
+    "footer.tagline": "Một dòng dịch vụ hạ tầng dữ liệu của KOS \u2014 dữ liệu thực tế chất lượng cao cho robot và máy móc thông minh.",
+    "footer.contactTitle": "Liên hệ",
+    "footer.hq": "Hà Nội, Việt Nam",
+    "footer.branchesTitle": "Chi nhánh",
+    "footer.copyright": "\u00a9 2026 KOSData. Bảo lưu mọi quyền.",
+    "footer.line2": "Một công ty nhân sự &amp; sản xuất, được xây dựng riêng cho dữ liệu huấn luyện AI."
+  }
+};
+
+function setLang(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (trans[lang][key] !== undefined) el.innerHTML = trans[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (trans[lang][key] !== undefined) el.setAttribute('placeholder', trans[lang][key]);
+  });
+  document.getElementById('html-root').setAttribute('lang', lang);
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-vi').classList.toggle('active', lang === 'vi');
+}
+</script>
+
+</body>
+</html>
