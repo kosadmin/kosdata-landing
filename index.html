@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KOSData — Data Infrastructure for AI Systems</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
   :root {
     --ink: #1B1207;
@@ -24,19 +24,20 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', sans-serif; color: var(--ink); background: var(--cream); line-height: 1.5; -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, .display { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; }
+  h1, h2, h3, .display { font-family: 'Be Vietnam Pro', sans-serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; }
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
   a { color: inherit; text-decoration: none; }
   section { padding: 92px 0; }
   .eyebrow { font-size: 13px; font-weight: 600; color: var(--amber); margin-bottom: 12px; }
   .sec-head { max-width: 640px; margin-bottom: 48px; }
-  .sec-head h2 { font-size: clamp(28px, 3.6vw, 38px); }
+  .sec-head h2 { font-size: clamp(32px, 4.4vw, 44px); }
+  .accent { color: var(--amber); }
   .sec-head p { color: #5b4d3a; font-size: 16px; margin-top: 14px; }
 
   /* ---------- NAV ---------- */
   nav { position: sticky; top: 0; z-index: 50; background: rgba(251,248,243,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line-dark); }
   nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-  .logo { font-family:'Space Grotesk'; font-weight:700; font-size: 20px; display:flex; align-items:center; gap:8px; }
+  .logo { font-family:'Be Vietnam Pro'; font-weight:700; font-size: 20px; display:flex; align-items:center; gap:8px; }
   .logo .dot { width:8px; height:8px; border-radius:50%; background: var(--amber); }
   .logo-img { height: 30px; display: block; }
   .logo-fallback { display: none; align-items: center; gap: 8px; }
@@ -52,9 +53,11 @@
 
   /* ---------- HERO ---------- */
   .hero { background: radial-gradient(ellipse 900px 500px at 75% 0%, var(--char-2), var(--ink) 70%); color: var(--white); padding: 96px 0 88px; position: relative; overflow: hidden; }
-  .hero::before, .hero::after { content: ""; position: absolute; width: 46px; height: 46px; border: 1.5px solid rgba(255,176,32,0.5); }
-  .hero::before { top: 40px; right: 40px; border-left: none; border-bottom: none; }
-  .hero::after { bottom: 40px; right: 96px; border-right: none; border-top: none; }
+  .hero-grid { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+  .hero-text { flex: 1 1 520px; }
+  .hero-visual { flex: 0 0 380px; display: flex; justify-content: center; }
+  .hero-visual svg { width: 100%; max-width: 380px; height: auto; }
+  @media (max-width: 900px) { .hero-visual { display: none; } }
   .rec { display:inline-flex; align-items:center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 28px; }
   .rec .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); animation: pulse 2s infinite; }
   @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(237,139,0,0.55); } 70% { box-shadow: 0 0 0 8px rgba(237,139,0,0); } 100% { box-shadow: 0 0 0 0 rgba(237,139,0,0); } }
@@ -76,7 +79,7 @@
   .stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); padding: 30px 32px; }
   .stat { padding: 0 20px; border-left: 1px solid var(--line); }
   .stat:first-child { border-left: none; }
-  .stat .num { font-family:'Space Grotesk'; font-size: 26px; font-weight: 700; color: var(--gold); }
+  .stat .num { font-family:'Be Vietnam Pro'; font-size: 26px; font-weight: 700; color: var(--gold); }
   .stat .label { font-size: 12.5px; color: rgba(255,255,255,0.62); margin-top: 4px; }
   @media (max-width: 800px) { .stats .wrap { grid-template-columns: repeat(2, 1fr); row-gap: 24px; } .stat:nth-child(3) { border-left: none; } }
 
@@ -85,7 +88,8 @@
   .services-grid { display: flex; gap: 24px; flex-wrap: wrap; }
   .services-grid .svc-card { flex: 1 1 260px; }
   .svc-card { background: var(--white); border: 1px solid rgba(27,18,7,0.08); border-radius: 8px; padding: 32px 28px; }
-  .svc-card .idx { font-family:'Space Grotesk'; font-size: 13px; color: var(--tan); font-weight: 700; }
+  .svc-icon { width: 52px; height: 52px; border-radius: 12px; background: rgba(237,139,0,0.1); color: var(--amber); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .svc-icon svg { width: 26px; height: 26px; }
   .svc-card h3 { font-size: 21px; margin-top: 14px; }
   .svc-card p { font-size: 14.5px; color: #5b4d3a; margin-top: 10px; }
   .svc-card ul { margin-top: 18px; padding-left: 0; list-style: none; }
@@ -99,10 +103,14 @@
   .advantage .eyebrow { color: var(--gold); }
   .advantage .sec-head p { color: rgba(255,255,255,0.65); }
   .adv-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 20px; }
-  .adv-stat .num { font-family:'Space Grotesk'; font-size: 30px; font-weight:700; color: var(--gold); }
+  .adv-stat .num { font-family:'Be Vietnam Pro'; font-size: 30px; font-weight:700; color: var(--gold); }
   .adv-stat .label { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 6px; }
   .industries { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line); }
-  .industries-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+  .industries-title {
+    font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 18px;
+    padding-left: 16px; border-left: 3px solid var(--amber); font-family: 'Be Vietnam Pro';
+  }
+  .industries-title .accent { color: var(--gold); }
   .industry-tags { display:flex; gap: 10px; flex-wrap: wrap; }
   .industry-tag { border: 1px solid rgba(255,176,32,0.35); color: var(--gold); font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 100px; }
   @media (max-width: 860px) { .adv-grid { grid-template-columns: 1fr; gap: 40px; } }
@@ -112,9 +120,9 @@
   .pipeline-steps::before { content: ""; position: absolute; top: 22px; left: 0; right: 0; height: 2px; background: rgba(27,18,7,0.12); z-index: 0; }
   .step-item { flex: 1; position: relative; z-index: 1; padding-right: 18px; }
   .step-circle {
-    width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--gold);
+    width: 44px; height: 44px; border-radius: 50%; background: var(--amber); color: var(--white);
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Grotesk'; font-weight: 700; font-size: 16px; margin-bottom: 18px;
+    font-family: 'Be Vietnam Pro'; font-weight: 700; font-size: 16px; margin-bottom: 18px;
   }
   .step-item h3 { font-size: 15.5px; }
   .step-item p { font-size: 13px; color: #5b4d3a; margin-top: 7px; line-height: 1.5; }
@@ -124,42 +132,54 @@
     .step-item { display: flex; gap: 18px; padding-right: 0; }
     .step-circle { margin-bottom: 0; flex-shrink: 0; }
   }
-  .pipe-note { margin-top: 40px; border: 1px dashed rgba(27,18,7,0.2); border-radius: 8px; padding: 20px 24px; font-size: 14.5px; color: #5b4d3a; }
+  .pipe-note { margin-top: 40px; background: rgba(237,139,0,0.1); border: 1px solid rgba(237,139,0,0.25); border-radius: 8px; padding: 20px 24px; font-size: 14.5px; color: #6b3f00; }
   .pipe-note strong { color: var(--ink); }
 
-  /* ---------- CASE STUDIES (horizontal carousel) ---------- */
+  /* ---------- CASE STUDIES (one at a time, image right / text left) ---------- */
   .case-carousel-wrap { position: relative; }
-  .case-track {
-    display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory;
-    padding-bottom: 8px; scrollbar-width: none;
-  }
-  .case-track::-webkit-scrollbar { display: none; }
+  .case-slide { display: none; }
+  .case-slide.active { display: flex; }
   .case-card {
-    background: var(--white); border: 1px solid rgba(27,18,7,0.08); border-radius: 8px; overflow: hidden;
-    scroll-snap-align: start; flex: 0 0 88%; max-width: 640px;
+    display: flex; align-items: stretch; gap: 0; width: 100%;
+    background: var(--white); border: 1px solid rgba(27,18,7,0.08); border-radius: 10px; overflow: hidden;
   }
-  .case-img { width: 100%; height: 220px; object-fit: cover; display: block; background: var(--tan); }
-  .case-body { padding: 28px 32px 32px; }
+  .case-body { padding: 40px; flex: 1 1 50%; display: flex; flex-direction: column; justify-content: center; }
+  .case-img { flex: 1 1 46%; width: 100%; min-height: 320px; object-fit: cover; display: block; background: var(--tan); }
   .case-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: var(--amber); }
-  .case-card h3 { font-size: 20px; margin-top: 12px; }
+  .case-card h3 { font-size: 21px; margin-top: 12px; }
   .case-card p { font-size: 14.5px; color: #5b4d3a; margin-top: 12px; }
   .case-stats { display:flex; gap: 28px; margin-top: 22px; padding-top: 20px; border-top: 1px solid rgba(27,18,7,0.08); }
-  .case-stat .num { font-family:'Space Grotesk'; font-size: 22px; font-weight: 700; color: var(--ink); }
+  .case-stat .num { font-family:'Be Vietnam Pro'; font-size: 22px; font-weight: 700; color: var(--ink); }
   .case-stat .label { font-size: 12px; color: #8a7a63; margin-top: 4px; }
-  .case-nav { display:flex; gap: 10px; justify-content:flex-end; margin-bottom: 20px; }
-  .case-nav button {
+  .case-nav { display:flex; align-items:center; justify-content: space-between; margin-bottom: 20px; }
+  .case-dots { display:flex; gap: 8px; }
+  .case-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(27,18,7,0.15); }
+  .case-dots span.active { background: var(--amber); }
+  .case-nav-btns { display:flex; gap: 10px; }
+  .case-nav-btns button {
     width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(27,18,7,0.15);
     background: var(--white); cursor: pointer; font-size: 16px; color: var(--ink);
   }
-  .case-nav button:hover { border-color: var(--amber); color: var(--amber); }
-  @media (min-width: 761px) { .case-card { flex: 0 0 46%; } }
+  .case-nav-btns button:hover { border-color: var(--amber); color: var(--amber); }
+  @media (max-width: 760px) { .case-card { flex-direction: column; } .case-img { min-height: 200px; } }
+
+  /* ---------- PARTNERS ---------- */
+  .partners-title { text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: #8a7a63; margin-bottom: 32px; text-transform: uppercase; }
+  .partners-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; }
+  .partner-logo {
+    flex: 0 0 auto; min-width: 140px; height: 56px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(27,18,7,0.1); border-radius: 6px; color: #8a7a63; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.04em; background: var(--white);
+  }
 
   /* ---------- CTA + FORM ---------- */
   .cta { background: radial-gradient(ellipse 700px 400px at 30% 30%, var(--char-2), var(--ink) 75%); color: var(--white); }
-  .cta-head { text-align: center; max-width: 620px; margin: 0 auto 48px; }
-  .cta-head h2 { font-size: clamp(28px, 4vw, 42px); }
-  .cta-head p { color: rgba(255,255,255,0.65); margin-top: 16px; }
-  .lead-form { max-width: 640px; margin: 0 auto; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 10px; padding: 36px; }
+  .cta-grid { display: flex; gap: 56px; align-items: center; }
+  .cta-text { flex: 1 1 380px; }
+  .cta-text h2 { font-size: clamp(28px, 3.6vw, 38px); }
+  .cta-text p { color: rgba(255,255,255,0.65); margin-top: 16px; font-size: 16px; }
+  .lead-form { flex: 1 1 440px; max-width: 480px; margin: 0; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 10px; padding: 32px; }
+  @media (max-width: 860px) { .cta-grid { flex-direction: column; } .lead-form { max-width: 100%; width: 100%; } }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-field { margin-bottom: 18px; }
   .form-field label { display:block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.75); margin-bottom: 7px; }
@@ -219,17 +239,39 @@
 
 <!-- ============ HERO ============ -->
 <header class="hero">
-  <div class="wrap">
-    <div class="rec"><span class="pulse"></span><span data-i18n="hero.eyebrow">DATA INFRASTRUCTURE FOR AI SYSTEMS</span></div>
-    <h1 data-i18n="hero.headline">Power your AI systems with <span>real‑world data, at scale.</span></h1>
-    <p class="lead" data-i18n="hero.sub">KOSData collects, annotates and packages high-fidelity human &amp; environment data into model-ready datasets — so your team trains faster, instead of chasing footage.</p>
-    <div class="hero-ctas">
-      <a class="btn-primary" href="#contact" data-i18n="hero.cta1">Scope a Pilot</a>
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <div class="rec"><span class="pulse"></span><span data-i18n="hero.eyebrow">DATA INFRASTRUCTURE FOR AI SYSTEMS</span></div>
+      <h1 data-i18n="hero.headline">Power your AI systems with <span>real‑world data, at scale.</span></h1>
+      <p class="lead" data-i18n="hero.sub">KOSData collects, annotates and packages high-fidelity human &amp; environment data into model-ready datasets — so your team trains faster, instead of chasing footage.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#contact" data-i18n="hero.cta1">Scope a Pilot</a>
+      </div>
+      <div class="hero-tags">
+        <span class="tag" data-i18n="hero.tag1">Data Collection</span>
+        <span class="tag" data-i18n="hero.tag2">Data Annotation</span>
+        <span class="tag" data-i18n="hero.tag3">AI Training Datasets</span>
+      </div>
     </div>
-    <div class="hero-tags">
-      <span class="tag" data-i18n="hero.tag1">Data Collection</span>
-      <span class="tag" data-i18n="hero.tag2">Data Annotation</span>
-      <span class="tag" data-i18n="hero.tag3">AI Training Datasets</span>
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg">
+        <!-- corner brackets -->
+        <path d="M40 90 V40 H90" fill="none" stroke="#FFB020" stroke-opacity="0.55" stroke-width="2"/>
+        <path d="M370 40 H420 V90" fill="none" stroke="#FFB020" stroke-opacity="0.55" stroke-width="2"/>
+        <path d="M40 370 V420 H90" fill="none" stroke="#FFB020" stroke-opacity="0.55" stroke-width="2"/>
+        <path d="M420 370 V420 H370" fill="none" stroke="#FFB020" stroke-opacity="0.55" stroke-width="2"/>
+        <!-- concentric rings -->
+        <circle cx="230" cy="230" r="150" fill="none" stroke="#FFFFFF" stroke-opacity="0.15" stroke-width="1.5"/>
+        <circle cx="230" cy="230" r="100" fill="none" stroke="#ED8B00" stroke-opacity="0.85" stroke-width="1.5"/>
+        <!-- orbit dots -->
+        <circle cx="230" cy="80" r="6" fill="#FFB020"/>
+        <circle cx="98" cy="368" r="5" fill="#ED8B00" fill-opacity="0.8"/>
+        <circle cx="362" cy="368" r="5" fill="#ED8B00" fill-opacity="0.8"/>
+        <circle cx="168" cy="292" r="4" fill="#FFB020"/>
+        <!-- center -->
+        <circle cx="230" cy="230" r="7" fill="#ED8B00"/>
+        <text x="252" y="236" fill="#FFFFFF" font-family="Inter, sans-serif" font-weight="700" font-size="15" letter-spacing="1.5">REC</text>
+      </svg>
     </div>
   </div>
 </header>
@@ -249,12 +291,12 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow" data-i18n="whatwedo.eyebrow">What we do</div>
-      <h2 data-i18n="whatwedo.title">Everything you need, in one place.</h2>
+      <h2 data-i18n="whatwedo.title"><span class="accent">Everything you need,</span> in one place.</h2>
       <p data-i18n="whatwedo.sub">Three integrated services built to unlock the full potential of your training pipeline — from raw capture to a licensable dataset.</p>
     </div>
     <div class="services-grid">
       <div class="svc-card">
-        <div class="idx">01</div>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.2-1.6A2 2 0 0 1 9.8 3h4.4a2 2 0 0 1 1.6.8L17 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
         <h3 data-i18n="svc1.title">Data Collection</h3>
         <p data-i18n="svc1.desc">Field-ready capture across every viewpoint your model needs — filmed onsite, in-studio, or through our APAC collector network.</p>
         <ul>
@@ -264,7 +306,7 @@
         </ul>
       </div>
       <div class="svc-card">
-        <div class="idx">02</div>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .6 1.4l8.5 8.5a2 2 0 0 0 2.8 0l6.5-6.5a2 2 0 0 0 0-2.8l-8.5-8.5A2 2 0 0 0 11.5 3z"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/></svg></div>
         <h3 data-i18n="svc2.title">Data Annotation</h3>
         <p data-i18n="svc2.desc">A QA-approved labeling workflow across six modalities, tuned for the precision robotics and computer vision teams need.</p>
         <ul>
@@ -274,7 +316,7 @@
         </ul>
       </div>
       <div class="svc-card">
-        <div class="idx">03</div>
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
         <h3 data-i18n="svc3.title">AI Training Datasets</h3>
         <p data-i18n="svc3.desc">Pre-built or custom-commissioned datasets, documented and packaged so they can be licensed again and again.</p>
         <ul>
@@ -283,9 +325,6 @@
           <li data-i18n="svc3.b3">Full documentation on specs, consent &amp; quality metrics</li>
         </ul>
       </div>
-    </div>
-    <div style="text-align:center; margin-top:40px">
-      <a class="btn-dark" href="#pipeline" data-i18n="whatwedo.explore">Explore Our Capabilities</a>
     </div>
   </div>
 </section>
@@ -296,7 +335,7 @@
     <div class="adv-grid">
       <div>
         <div class="eyebrow" data-i18n="advantage.eyebrow">Why KOSData</div>
-        <h2 data-i18n="advantage.title">Our history is the advantage.</h2>
+        <h2 class="accent" data-i18n="advantage.title">Our history is the advantage.</h2>
         <p data-i18n="advantage.body">KOSData is the newest line inside KOS — twenty years of workforce and manufacturing-staffing operations across Vietnam. That track record means rapid scale-up, nationwide reach, and teams who already understand the industries AI needs data from most.</p>
       </div>
       <div class="adv-stats">
@@ -307,7 +346,7 @@
       </div>
     </div>
     <div class="industries">
-      <div class="industries-title" data-i18n="advantage.industriesTitle">Already active in the industries driving AI adoption</div>
+      <div class="industries-title" data-i18n="advantage.industriesTitle">Already active in the industries <span class="accent">driving AI adoption</span></div>
       <div class="industry-tags">
         <span class="industry-tag" data-i18n="industry.1">Manufacturing &amp; Assembly</span>
         <span class="industry-tag" data-i18n="industry.2">Banking &amp; Financial Services</span>
@@ -324,7 +363,7 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow" data-i18n="pipeline.eyebrow">How we work</div>
-      <h2 data-i18n="pipeline.title">From brief to delivery in five steps.</h2>
+      <h2 data-i18n="pipeline.title">From brief to delivery <span class="accent">in five steps.</span></h2>
       <p data-i18n="pipeline.sub">A repeatable, quality-controlled structure that scales from a 500-hour pilot to a 50,000-hour production program.</p>
     </div>
     <div class="pipeline-steps">
@@ -369,13 +408,17 @@
     </div>
     <div class="case-carousel-wrap">
       <div class="case-nav">
-        <button type="button" aria-label="Previous" onclick="document.getElementById('case-track').scrollBy({left:-400,behavior:'smooth'})">‹</button>
-        <button type="button" aria-label="Next" onclick="document.getElementById('case-track').scrollBy({left:400,behavior:'smooth'})">›</button>
+        <div class="case-dots" id="case-dots">
+          <span class="active" onclick="showCase(0)"></span>
+          <span onclick="showCase(1)"></span>
+        </div>
+        <div class="case-nav-btns">
+          <button type="button" aria-label="Previous" onclick="showCase(caseIndex-1)">‹</button>
+          <button type="button" aria-label="Next" onclick="showCase(caseIndex+1)">›</button>
+        </div>
       </div>
-      <div class="case-track" id="case-track">
+      <div class="case-slide active" data-case-slide="0">
         <div class="case-card">
-          <!-- Replace with a real project photo -->
-          <img class="case-img" src="https://placehold.co/640x440/2E2110/FFB020?text=Hospitality+Staffing" alt="Hospitality staffing case study">
           <div class="case-body">
             <div class="case-tag" data-i18n="case1.tag">CASE STUDY · HOSPITALITY STAFFING</div>
             <h3 data-i18n="case1.title">Hotel operations workforce deployment (2026)</h3>
@@ -386,10 +429,12 @@
               <div class="case-stat"><div class="num">87%</div><div class="label" data-i18n="case1.stat3">Fill rate</div></div>
             </div>
           </div>
-        </div>
-        <div class="case-card">
           <!-- Replace with a real project photo -->
-          <img class="case-img" src="https://placehold.co/640x440/2E2110/FFB020?text=Manufacturing+Staffing" alt="Manufacturing staffing case study">
+          <img class="case-img" src="https://placehold.co/640x440/2E2110/FFB020?text=Hospitality+Staffing" alt="Hospitality staffing case study">
+        </div>
+      </div>
+      <div class="case-slide" data-case-slide="1">
+        <div class="case-card">
           <div class="case-body">
             <div class="case-tag" data-i18n="case2.tag">CASE STUDY · MANUFACTURING STAFFING</div>
             <h3 data-i18n="case2.title">Manufacturing workforce supply (2024)</h3>
@@ -400,25 +445,43 @@
               <div class="case-stat"><div class="num">03</div><div class="label" data-i18n="case2.stat3">Weeks to full staffing</div></div>
             </div>
           </div>
+          <!-- Replace with a real project photo -->
+          <img class="case-img" src="https://placehold.co/640x440/2E2110/FFB020?text=Manufacturing+Staffing" alt="Manufacturing staffing case study">
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ============ PARTNERS ============ -->
+<section id="partners" style="background:var(--cream); padding-top:64px; padding-bottom:64px;">
+  <div class="wrap">
+    <div class="partners-title" data-i18n="partners.title">Trusted by teams building with KOS</div>
+    <div class="partners-row">
+      <!-- Replace each box below with a real partner logo image -->
+      <div class="partner-logo">PARTNER 01</div>
+      <div class="partner-logo">PARTNER 02</div>
+      <div class="partner-logo">PARTNER 03</div>
+      <div class="partner-logo">PARTNER 04</div>
+      <div class="partner-logo">PARTNER 05</div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CTA + LEAD FORM ============ -->
 <section class="cta" id="contact">
-  <div class="wrap">
-    <div class="cta-head">
-      <h2 data-i18n="cta.title">Ready to power your next AI system?</h2>
+  <div class="wrap cta-grid">
+    <div class="cta-text">
+      <h2 class="accent" data-i18n="cta.title">Ready to power your next AI system?</h2>
       <p data-i18n="cta.sub">Tell us your brief — we'll scope a pilot within days.</p>
     </div>
 
-    <!-- If hosted on Netlify, this form is auto-detected and captured (data-netlify + hidden form-name field). -->
-    <form class="lead-form" name="kosdata-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="kosdata-contact">
-      <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
-
+    <!--
+      Lead capture form — submits to a Google Apps Script Web App, which appends
+      each submission as a new row in a Google Sheet. Replace GAS_WEB_APP_URL
+      below with your own deployed Apps Script URL (see setup instructions provided separately).
+    -->
+    <form class="lead-form" id="lead-form" onsubmit="return submitLeadForm(event)">
       <div class="form-row">
         <div class="form-field">
           <label data-i18n="form.name">Your name</label>
@@ -443,8 +506,8 @@
         <label data-i18n="form.message">Tell us about your project</label>
         <textarea name="message" data-i18n-ph="form.messagePh" placeholder="Data type, volume, timeline, target use case..." required></textarea>
       </div>
-      <button type="submit" class="btn-primary form-submit" data-i18n="form.submit">Send Brief</button>
-      <div class="form-note" data-i18n="form.note">We typically respond within 1–2 business days.</div>
+      <button type="submit" class="btn-primary form-submit" id="lead-form-submit" data-i18n="form.submit">Send Brief</button>
+      <div class="form-note" id="lead-form-note" data-i18n="form.note">We typically respond within 1–2 business days.</div>
     </form>
   </div>
 </section>
@@ -504,9 +567,8 @@ const trans = {
     "stats.label3": "Data collaborators nationwide",
     "stats.label4": "Client satisfaction rate",
     "whatwedo.eyebrow": "What we do",
-    "whatwedo.title": "Everything you need, in one place.",
+    "whatwedo.title": "<span class=\"accent\">Everything you need,</span> in one place.",
     "whatwedo.sub": "Three integrated services built to unlock the full potential of your training pipeline \u2014 from raw capture to a licensable dataset.",
-    "whatwedo.explore": "Explore Our Capabilities",
     "svc1.title": "Data Collection",
     "svc1.desc": "Field-ready capture across every viewpoint your model needs \u2014 filmed onsite, in-studio, or through our APAC collector network.",
     "svc1.b1": "Up to 4K/60fps synced multi-camera capture",
@@ -525,7 +587,7 @@ const trans = {
     "advantage.eyebrow": "Why KOSData",
     "advantage.title": "Our history is the advantage.",
     "advantage.body": "KOSData is the newest line inside KOS \u2014 twenty years of workforce and manufacturing-staffing operations across Vietnam. That track record means rapid scale-up, nationwide reach, and teams who already understand the industries AI needs data from most.",
-    "advantage.industriesTitle": "Already active in the industries driving AI adoption",
+    "advantage.industriesTitle": "Already active in the industries <span class=\"accent\">driving AI adoption</span>",
     "industry.1": "Manufacturing &amp; Assembly",
     "industry.2": "Banking &amp; Financial Services",
     "industry.3": "Retail &amp; Consumer Services",
@@ -536,7 +598,7 @@ const trans = {
     "advantage.stat3": "Members in KOS's social communities",
     "advantage.stat4": "Recruitment collaborators &amp; vendors",
     "pipeline.eyebrow": "How we work",
-    "pipeline.title": "From brief to delivery in five steps.",
+    "pipeline.title": "From brief to delivery <span class=\"accent\">in five steps.</span>",
     "pipeline.sub": "A repeatable, quality-controlled structure that scales from a 500-hour pilot to a 50,000-hour production program.",
     "pipeline.step1title": "Specification",
     "pipeline.step1desc": "Model requirements translated into a capture or annotation spec \u2014 configuration, task scripts, diversity matrix, delivery format.",
@@ -566,6 +628,7 @@ const trans = {
     "case2.stat2": "Production lines",
     "case2.stat3": "Weeks to full staffing",
     "cta.title": "Ready to power your next AI system?",
+    "partners.title": "Trusted by teams building with KOS",
     "cta.sub": "Tell us your brief \u2014 we'll scope a pilot within days.",
     "form.name": "Your name",
     "form.namePh": "Nguyen Van A",
@@ -604,9 +667,8 @@ const trans = {
     "stats.label3": "Cộng tác viên cung cấp dữ liệu trên toàn quốc",
     "stats.label4": "Tỷ lệ hài lòng của khách hàng",
     "whatwedo.eyebrow": "Chúng tôi làm gì",
-    "whatwedo.title": "Tất cả những gì bạn cần, trong một nơi duy nhất.",
+    "whatwedo.title": "<span class=\"accent\">Tất cả những gì bạn cần,</span> trong một nơi duy nhất.",
     "whatwedo.sub": "Ba dịch vụ được tích hợp chặt chẽ để mở khóa toàn bộ tiềm năng của pipeline huấn luyện \u2014 từ thu thập dữ liệu thô đến bộ dữ liệu có thể cấp phép.",
-    "whatwedo.explore": "Khám Phá Năng Lực Của Chúng Tôi",
     "svc1.title": "Thu Thập Dữ Liệu",
     "svc1.desc": "Thu thập tận hiện trường ở mọi góc nhìn mô hình của bạn cần \u2014 quay tại chỗ, trong studio, hoặc qua mạng lưới cộng tác viên khắp APAC.",
     "svc1.b1": "Quay đồng bộ đa camera, độ phân giải lên đến 4K/60fps",
@@ -625,7 +687,7 @@ const trans = {
     "advantage.eyebrow": "Vì sao chọn KOSData",
     "advantage.title": "Lịch sử của chúng tôi chính là lợi thế.",
     "advantage.body": "KOSData là dòng dịch vụ mới nhất của KOS \u2014 kế thừa 20 năm vận hành nhân sự và cung ứng lao động sản xuất trên khắp Việt Nam. Nền tảng đó mang lại khả năng mở rộng nhanh, hiện diện trên toàn quốc, và đội ngũ đã am hiểu sẵn những ngành mà dữ liệu AI cần nhất.",
-    "advantage.industriesTitle": "Đã hoạt động trong chính những ngành đang dẫn đầu làn sóng ứng dụng AI",
+    "advantage.industriesTitle": "Đã hoạt động trong chính những ngành <span class=\"accent\">đang dẫn đầu làn sóng ứng dụng AI</span>",
     "industry.1": "Sản Xuất &amp; Lắp Ráp",
     "industry.2": "Ngân Hàng &amp; Dịch Vụ Tài Chính",
     "industry.3": "Bán Lẻ &amp; Dịch Vụ Tiêu Dùng",
@@ -636,7 +698,7 @@ const trans = {
     "advantage.stat3": "Thành viên trong cộng đồng của KOS",
     "advantage.stat4": "Đối tác &amp; cộng tác viên tuyển dụng",
     "pipeline.eyebrow": "Cách chúng tôi vận hành",
-    "pipeline.title": "Từ yêu cầu đến bàn giao trong 5 bước.",
+    "pipeline.title": "Từ yêu cầu đến bàn giao <span class=\"accent\">trong 5 bước.</span>",
     "pipeline.sub": "Một quy trình lặp lại được, kiểm soát chất lượng chặt chẽ — mở rộng được từ pilot 500 giờ đến chương trình sản xuất 50.000 giờ.",
     "pipeline.step1title": "Đặc Tả Yêu Cầu",
     "pipeline.step1desc": "Chuyển yêu cầu mô hình thành đặc tả thu thập/gán nhãn cụ thể \u2014 cấu hình, kịch bản tác vụ, ma trận đa dạng, định dạng bàn giao.",
@@ -666,6 +728,7 @@ const trans = {
     "case2.stat2": "Dây chuyền sản xuất",
     "case2.stat3": "Tuần để hoàn tất tuyển dụng",
     "cta.title": "Sẵn sàng tiếp sức cho hệ thống AI tiếp theo của bạn?",
+    "partners.title": "Được các đối tác tin tưởng hợp tác cùng KOS",
     "cta.sub": "Chia sẻ yêu cầu của bạn \u2014 chúng tôi sẽ lên kế hoạch pilot chỉ trong vài ngày.",
     "form.name": "Tên của bạn",
     "form.namePh": "Nguyễn Văn A",
@@ -687,6 +750,48 @@ const trans = {
     "footer.line2": "Một công ty nhân sự &amp; sản xuất, được xây dựng riêng cho dữ liệu huấn luyện AI."
   }
 };
+
+let caseIndex = 0;
+const caseCount = 2;
+function showCase(i) {
+  caseIndex = (i + caseCount) % caseCount;
+  document.querySelectorAll('.case-slide').forEach((el, idx) => {
+    el.classList.toggle('active', idx === caseIndex);
+  });
+  document.querySelectorAll('#case-dots span').forEach((el, idx) => {
+    el.classList.toggle('active', idx === caseIndex);
+  });
+}
+
+// ===== Lead form -> Google Sheets =====
+// 1. Deploy the Apps Script Web App described in the setup guide.
+// 2. Paste its /exec URL below, replacing the placeholder.
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec";
+
+function submitLeadForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('lead-form-submit');
+  const note = document.getElementById('lead-form-note');
+  const data = new FormData(form);
+
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  fetch(GAS_WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: data })
+    .then(() => {
+      form.reset();
+      note.textContent = 'Thanks — we received your brief and will reply within 1–2 business days.';
+      note.style.color = '#FFB020';
+      btn.textContent = 'Sent ✓';
+    })
+    .catch(() => {
+      note.textContent = 'Something went wrong — please email hello@kosdata.com directly.';
+      btn.disabled = false;
+      btn.textContent = 'Send Brief';
+    });
+  return false;
+}
 
 function setLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
