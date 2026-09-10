@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KOSData — Data Infrastructure for AI Systems</title>
+<title>KOSData — Real-World Data for AI</title>
+<link rel="icon" type="image/png" href="logo-small.png">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
@@ -206,7 +207,6 @@
   .footer-brand p { color: rgba(255,255,255,0.5); max-width: 280px; line-height: 1.6; }
   .footer-col h4 { font-size: 12.5px; color: rgba(255,255,255,0.8); font-weight: 600; margin-bottom: 14px; letter-spacing: 0.02em; }
   .footer-heading-lg { font-size: 17px !important; color: var(--white) !important; }
-  .footer-company-en { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: -4px; line-height: 1.5; }
   .footer-col div { margin-bottom: 9px; }
   .footer-col a:hover { color: var(--gold); }
   .footer-qr-row { display: flex; gap: 20px; margin-top: 16px; }
@@ -243,7 +243,7 @@
       <span class="logo-fallback"><span class="dot"></span>KOSData</span>
     </a>
     <div class="navlinks">
-      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#services" data-i18n="nav.services">Our Services</a>
       <a href="#advantage" data-i18n="nav.why">Why KOSData</a>
       <a href="#pipeline" data-i18n="nav.pipeline">How We Work</a>
       <a href="#cases" data-i18n="nav.cases">Case Studies</a>
@@ -451,7 +451,7 @@
             </div>
           </div>
           <!-- Replace with a real project photo -->
-          <img class="case-img" src="https://placehold.co/640x440/2E2110/FFB020?text=Hospitality+Staffing" alt="Hospitality staffing case study">
+          <img class="case-img" src="hospitality.jpg" alt="Hospitality staffing case study">
         </div>
       </div>
       <div class="case-slide" data-case-slide="1">
@@ -467,7 +467,7 @@
             </div>
           </div>
           <!-- Replace with a real project photo -->
-          <img class="case-img" src="https://placehold.co/640x440/2E2110/FFB020?text=Manufacturing+Staffing" alt="Manufacturing staffing case study">
+          <img class="case-img" src="manufacturing.png" alt="Manufacturing staffing case study">
         </div>
       </div>
     </div>
@@ -541,8 +541,8 @@
       </div>
       <div class="footer-col">
         <h4 class="footer-heading-lg" data-i18n="footer.contactTitle">Contact</h4>
-        <div><a href="mailto:info@koutsourcing.vn">info@koutsourcing.vn</a></div>
-        <div><a href="tel:+84397013122">+84 397 013 122</a></div>
+        <div>Email: <a href="mailto:info@koutsourcing.vn">info@koutsourcing.vn</a></div>
+        <div><span data-i18n="footer.phoneLabel">Phone:</span> <a href="tel:+84397013122">+84 397 013 122</a></div>
         <div class="footer-qr-row">
           <div class="footer-qr">
             <!-- Replace qr-whatsapp.png with your real WhatsApp QR image -->
@@ -557,10 +557,9 @@
         </div>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer.companyName">Công ty Cổ phần Giải pháp Nhân sự &amp; Tư vấn Đầu tư K-Outsourcing</h4>
-        <div class="footer-company-en" data-i18n="footer.companyNameEn">(K-Outsourcing Human Resources Solutions &amp; Investment Consulting Joint Stock Company)</div>
-        <div style="margin-top:12px">B-TT13-04, Khu nhà ở Ngân Hà Vạn Phúc, Quận Hà Đông, TP Hà Nội, Việt Nam</div>
-        <div>Mã DUNS: 673825772</div>
+        <h4 class="footer-heading-lg" data-i18n="footer.companyName">K-Outsourcing Human Resources Solutions &amp; Investment Consulting Joint Stock Company</h4>
+        <div style="margin-top:12px" data-i18n="footer.address">Address: B-TT13-04, Ngan Ha Van Phuc Residential Area, Ha Dong District, Hanoi, Vietnam</div>
+        <div data-i18n="footer.duns">DUNS Number: 673825772</div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -572,7 +571,7 @@
 <script>
 const trans = {
   en: {
-    "nav.services": "Services",
+    "nav.services": "Our Services",
     "nav.why": "Why KOSData",
     "nav.pipeline": "How We Work",
     "nav.cases": "Case Studies",
@@ -666,13 +665,17 @@ const trans = {
     "form.note": "We typically respond within 1\u20132 business days.",
     "footer.tagline": "High-fidelity real-world data for robots and intelligent machines",
     "footer.contactTitle": "Contact",
+    "footer.companyName": "K-Outsourcing Human Resources Solutions &amp; Investment Consulting Joint Stock Company",
+    "footer.address": "Address: B-TT13-04, Ngan Ha Van Phuc Residential Area, Ha Dong District, Hanoi, Vietnam",
+    "footer.duns": "DUNS Number: 673825772",
+    "footer.phoneLabel": "Phone:",
     "footer.copyright": "\u00a9 2026 KOSData. All rights reserved."
   },
   vi: {
-    "nav.services": "Dịch vụ",
+    "nav.services": "Dịch vụ của chúng tôi",
     "nav.why": "Vì sao chọn KOSData",
     "nav.pipeline": "Quy trình",
-    "nav.cases": "Case Study",
+    "nav.cases": "Năng lực thực tiễn",
     "nav.cta": "Liên hệ ngay",
     "hero.eyebrow": "DỮ LIỆU THỰC TẾ - KIẾN TẠO THÔNG MINH",
     "hero.headline": "Tiếp sức cho hệ thống AI của bạn bằng <span>dữ liệu thực tế</span>",
@@ -763,6 +766,10 @@ const trans = {
     "form.note": "Chúng tôi thường phản hồi trong vòng 1\u20132 ngày làm việc.",
     "footer.tagline": "Dữ liệu thực tế chất lượng cao cho robot và máy móc thông minh",
     "footer.contactTitle": "Liên hệ",
+    "footer.companyName": "Công ty Cổ phần Giải pháp Nhân sự &amp; Tư vấn Đầu tư K-Outsourcing",
+    "footer.address": "Địa chỉ: B-TT13-04, Khu nhà ở Ngân Hà Vạn Phúc, Quận Hà Đông, TP Hà Nội, Việt Nam",
+    "footer.duns": "Mã DUNS: 673825772",
+    "footer.phoneLabel": "SĐT:",
     "footer.copyright": "\u00a9 2026 KOSData. Bảo lưu mọi quyền."
   }
 };
