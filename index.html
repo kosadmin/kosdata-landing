@@ -24,7 +24,8 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', sans-serif; color: var(--ink); background: var(--cream); line-height: 1.5; -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, .display { font-family: 'Be Vietnam Pro', sans-serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; }
+  h1, h2, h3, .display { font-family: 'Be Vietnam Pro', sans-serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; text-wrap: balance; }
+  .title-lg { font-size: clamp(32px, 4.4vw, 44px); }
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
   a { color: inherit; text-decoration: none; }
   section { padding: 92px 0; }
@@ -164,13 +165,16 @@
   @media (max-width: 760px) { .case-card { flex-direction: column; } .case-img { min-height: 200px; } }
 
   /* ---------- PARTNERS ---------- */
-  .partners-title { text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: #8a7a63; margin-bottom: 32px; text-transform: uppercase; }
-  .partners-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; }
-  .partner-logo {
-    flex: 0 0 auto; min-width: 140px; height: 56px; display: flex; align-items: center; justify-content: center;
-    border: 1px solid rgba(27,18,7,0.1); border-radius: 6px; color: #8a7a63; font-size: 12px; font-weight: 700;
-    letter-spacing: 0.04em; background: var(--white);
+  .partners-head { text-align: center; margin-bottom: 44px; }
+  .partners-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 28px 20px; align-items: center; justify-items: center;
+    background: rgba(255,255,255,0.5); border: 1px solid rgba(27,18,7,0.06);
+    border-radius: 16px; padding: 32px 20px;
   }
+  .partners-grid img { max-height: 40px; width: auto; max-width: 100%; object-fit: contain; }
+  @media (min-width: 620px) { .partners-grid { grid-template-columns: repeat(6, 1fr); } }
+  @media (min-width: 940px) { .partners-grid { grid-template-columns: repeat(8, 1fr); gap: 32px 24px; padding: 40px; } .partners-grid img { max-height: 46px; } }
 
   /* ---------- CTA + FORM ---------- */
   .cta { background: radial-gradient(ellipse 700px 400px at 30% 30%, var(--char-2), var(--ink) 75%); color: var(--white); }
@@ -241,9 +245,9 @@
 <header class="hero">
   <div class="wrap hero-grid">
     <div class="hero-text">
-      <div class="rec"><span class="pulse"></span><span data-i18n="hero.eyebrow">DATA INFRASTRUCTURE FOR AI SYSTEMS</span></div>
-      <h1 data-i18n="hero.headline">Power your AI systems with <span>real‑world data, at scale.</span></h1>
-      <p class="lead" data-i18n="hero.sub">KOSData collects, annotates and packages high-fidelity human &amp; environment data into model-ready datasets — so your team trains faster, instead of chasing footage.</p>
+      <div class="rec"><span class="pulse"></span><span data-i18n="hero.eyebrow">REAL-WORLD DATA — BUILT FOR AI</span></div>
+      <h1 data-i18n="hero.headline">Power your AI systems with <span>real‑world data</span></h1>
+      <p class="lead" data-i18n="hero.sub">We source the people, capture the environments, annotate the data and deliver production-ready datasets — so your AI team can move faster.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="#contact" data-i18n="hero.cta1">Scope a Pilot</a>
       </div>
@@ -292,36 +296,36 @@
     <div class="sec-head">
       <div class="eyebrow" data-i18n="whatwedo.eyebrow">What we do</div>
       <h2 data-i18n="whatwedo.title"><span class="accent">Everything you need,</span> in one place.</h2>
-      <p data-i18n="whatwedo.sub">Three integrated services built to unlock the full potential of your training pipeline — from raw capture to a licensable dataset.</p>
+      <p data-i18n="whatwedo.sub">Three integrated services to unlock the full potential of your training pipeline</p>
     </div>
     <div class="services-grid">
       <div class="svc-card">
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.2-1.6A2 2 0 0 1 9.8 3h4.4a2 2 0 0 1 1.6.8L17 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
         <h3 data-i18n="svc1.title">Data Collection</h3>
-        <p data-i18n="svc1.desc">Field-ready capture across every viewpoint your model needs — filmed onsite, in-studio, or through our APAC collector network.</p>
+        <p data-i18n="svc1.desc">Capture the real world your AI needs — across people, environments, actions and scenarios, wherever the data lives.</p>
         <ul>
-          <li data-i18n="svc1.b1">Up to 4K/60fps synced multi-camera capture</li>
-          <li data-i18n="svc1.b2">Real operating environments, not staged sets</li>
+          <li data-i18n="svc1.b1">Multi-camera capture up to 4K/60fps</li>
+          <li data-i18n="svc1.b2">Authentic environments. Real-world behavior.</li>
           <li data-i18n="svc1.b3">Consent &amp; compliance handled on-site</li>
         </ul>
       </div>
       <div class="svc-card">
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .6 1.4l8.5 8.5a2 2 0 0 0 2.8 0l6.5-6.5a2 2 0 0 0 0-2.8l-8.5-8.5A2 2 0 0 0 11.5 3z"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/></svg></div>
         <h3 data-i18n="svc2.title">Data Annotation</h3>
-        <p data-i18n="svc2.desc">A QA-approved labeling workflow across six modalities, tuned for the precision robotics and computer vision teams need.</p>
+        <p data-i18n="svc2.desc">Turn raw data into structured intelligence with precision annotation, domain-trained teams and multi-stage quality control.</p>
         <ul>
           <li data-i18n="svc2.b1">Image, video, audio, text, 3D &amp; document labeling</li>
-          <li data-i18n="svc2.b2">Multi-stage QA with tracked inter-annotator agreement</li>
-          <li data-i18n="svc2.b3">Delivered in COCO / YOLO / VOC-ready formats</li>
+          <li data-i18n="svc2.b2">Multi-stage QA with measurable annotation consistency</li>
+          <li data-i18n="svc2.b3">Delivered in industry-standard, model-ready formats</li>
         </ul>
       </div>
       <div class="svc-card">
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
         <h3 data-i18n="svc3.title">AI Training Datasets</h3>
-        <p data-i18n="svc3.desc">Pre-built or custom-commissioned datasets, documented and packaged so they can be licensed again and again.</p>
+        <p data-i18n="svc3.desc">Purpose-built datasets engineered around your model, use case and scale — ready to integrate into your training pipeline.</p>
         <ul>
           <li data-i18n="svc3.b1">Covers robotics, computer vision, speech &amp; language</li>
-          <li data-i18n="svc3.b2">Ready-to-train HDF5/RLDS, COCO, YOLO, JSON exports</li>
+          <li data-i18n="svc3.b2">Ready-to-train exports in the formats you need</li>
           <li data-i18n="svc3.b3">Full documentation on specs, consent &amp; quality metrics</li>
         </ul>
       </div>
@@ -335,11 +339,11 @@
     <div class="adv-grid">
       <div>
         <div class="eyebrow" data-i18n="advantage.eyebrow">Why KOSData</div>
-        <h2 class="accent" data-i18n="advantage.title">Our history is the advantage.</h2>
-        <p data-i18n="advantage.body">KOSData is the newest line inside KOS — twenty years of workforce and manufacturing-staffing operations across Vietnam. That track record means rapid scale-up, nationwide reach, and teams who already understand the industries AI needs data from most.</p>
+        <h2 class="accent title-lg" data-i18n="advantage.title">Our history is the advantage.</h2>
+        <p data-i18n="advantage.body">KOSData is built on KOS's 20+ years of workforce and production experience across Vietnam. That means we don't start from zero: we already have the people, local reach, operational know-how and industry access needed to execute complex data programs at scale.</p>
       </div>
       <div class="adv-stats">
-        <div class="adv-stat"><div class="num">20+</div><div class="label" data-i18n="advantage.stat1">Years across top AI-powering fields</div></div>
+        <div class="adv-stat"><div class="num">20+</div><div class="label" data-i18n="advantage.stat1">years across top AI-powering fields</div></div>
         <div class="adv-stat"><div class="num">08</div><div class="label" data-i18n="advantage.stat2">Branches across Northern Vietnam</div></div>
         <div class="adv-stat"><div class="num">250,000+</div><div class="label" data-i18n="advantage.stat3">Members in KOS's social communities</div></div>
         <div class="adv-stat"><div class="num">100+</div><div class="label" data-i18n="advantage.stat4">Recruitment collaborators &amp; vendors</div></div>
@@ -454,17 +458,12 @@
 </section>
 
 <!-- ============ PARTNERS ============ -->
-<section id="partners" style="background:var(--cream); padding-top:64px; padding-bottom:64px;">
+<section id="partners" style="background:var(--cream); padding-top:80px; padding-bottom:80px;">
   <div class="wrap">
-    <div class="partners-title" data-i18n="partners.title">Trusted by teams building with KOS</div>
-    <div class="partners-row">
-      <!-- Replace each box below with a real partner logo image -->
-      <div class="partner-logo">PARTNER 01</div>
-      <div class="partner-logo">PARTNER 02</div>
-      <div class="partner-logo">PARTNER 03</div>
-      <div class="partner-logo">PARTNER 04</div>
-      <div class="partner-logo">PARTNER 05</div>
+    <div class="partners-head">
+      <h2 class="title-lg" data-i18n="partners.title">Our Partners</h2>
     </div>
+    <div class="partners-grid" id="partners-grid"></div>
   </div>
 </section>
 
@@ -555,9 +554,9 @@ const trans = {
     "nav.pipeline": "How We Work",
     "nav.cases": "Case Studies",
     "nav.cta": "Get in touch",
-    "hero.eyebrow": "DATA INFRASTRUCTURE FOR AI SYSTEMS",
-    "hero.headline": "Power your AI systems with <span>real\u2011world data, at scale.</span>",
-    "hero.sub": "KOSData collects, annotates and packages high-fidelity human &amp; environment data into model-ready datasets \u2014 so your team trains faster, instead of chasing footage.",
+    "hero.eyebrow": "REAL-WORLD DATA \u2014 BUILT FOR AI",
+    "hero.headline": "Power your AI systems with <span>real\u2011world data</span>",
+    "hero.sub": "We source the people, capture the environments, annotate the data and deliver production-ready datasets \u2014 so your AI team can move faster.",
     "hero.cta1": "Scope a Pilot",
     "hero.tag1": "Data Collection",
     "hero.tag2": "Data Annotation",
@@ -568,32 +567,32 @@ const trans = {
     "stats.label4": "Client satisfaction rate",
     "whatwedo.eyebrow": "What we do",
     "whatwedo.title": "<span class=\"accent\">Everything you need,</span> in one place.",
-    "whatwedo.sub": "Three integrated services built to unlock the full potential of your training pipeline \u2014 from raw capture to a licensable dataset.",
+    "whatwedo.sub": "Three integrated services to unlock the full potential of your training pipeline",
     "svc1.title": "Data Collection",
-    "svc1.desc": "Field-ready capture across every viewpoint your model needs \u2014 filmed onsite, in-studio, or through our APAC collector network.",
-    "svc1.b1": "Up to 4K/60fps synced multi-camera capture",
-    "svc1.b2": "Real operating environments, not staged sets",
+    "svc1.desc": "Capture the real world your AI needs \u2014 across people, environments, actions and scenarios, wherever the data lives.",
+    "svc1.b1": "Multi-camera capture up to 4K/60fps",
+    "svc1.b2": "Authentic environments. Real-world behavior.",
     "svc1.b3": "Consent &amp; compliance handled on-site",
     "svc2.title": "Data Annotation",
-    "svc2.desc": "A QA-approved labeling workflow across six modalities, tuned for the precision robotics and computer vision teams need.",
+    "svc2.desc": "Turn raw data into structured intelligence with precision annotation, domain-trained teams and multi-stage quality control.",
     "svc2.b1": "Image, video, audio, text, 3D &amp; document labeling",
-    "svc2.b2": "Multi-stage QA with tracked inter-annotator agreement",
-    "svc2.b3": "Delivered in COCO / YOLO / VOC-ready formats",
+    "svc2.b2": "Multi-stage QA with measurable annotation consistency",
+    "svc2.b3": "Delivered in industry-standard, model-ready formats",
     "svc3.title": "AI Training Datasets",
-    "svc3.desc": "Pre-built or custom-commissioned datasets, documented and packaged so they can be licensed again and again.",
+    "svc3.desc": "Purpose-built datasets engineered around your model, use case and scale \u2014 ready to integrate into your training pipeline.",
     "svc3.b1": "Covers robotics, computer vision, speech &amp; language",
-    "svc3.b2": "Ready-to-train HDF5/RLDS, COCO, YOLO, JSON exports",
+    "svc3.b2": "Ready-to-train exports in the formats you need",
     "svc3.b3": "Full documentation on specs, consent &amp; quality metrics",
     "advantage.eyebrow": "Why KOSData",
     "advantage.title": "Our history is the advantage.",
-    "advantage.body": "KOSData is the newest line inside KOS \u2014 twenty years of workforce and manufacturing-staffing operations across Vietnam. That track record means rapid scale-up, nationwide reach, and teams who already understand the industries AI needs data from most.",
+    "advantage.body": "KOSData is built on KOS\u2019s 20+ years of workforce and production experience across Vietnam. That means we don\u2019t start from zero: we already have the people, local reach, operational know-how and industry access needed to execute complex data programs at scale.",
     "advantage.industriesTitle": "Already active in the industries <span class=\"accent\">driving AI adoption</span>",
     "industry.1": "Manufacturing &amp; Assembly",
     "industry.2": "Banking &amp; Financial Services",
     "industry.3": "Retail &amp; Consumer Services",
     "industry.4": "Logistics &amp; Warehousing",
     "industry.5": "Hospitality &amp; Hotel Operations",
-    "advantage.stat1": "Years across top AI-powering fields",
+    "advantage.stat1": "20+ years across top AI-powering fields",
     "advantage.stat2": "Branches across Northern Vietnam",
     "advantage.stat3": "Members in KOS's social communities",
     "advantage.stat4": "Recruitment collaborators &amp; vendors",
@@ -628,7 +627,7 @@ const trans = {
     "case2.stat2": "Production lines",
     "case2.stat3": "Weeks to full staffing",
     "cta.title": "Ready to power your next AI system?",
-    "partners.title": "Trusted by teams building with KOS",
+    "partners.title": "Our Partners",
     "cta.sub": "Tell us your brief \u2014 we'll scope a pilot within days.",
     "form.name": "Your name",
     "form.namePh": "Nguyen Van A",
@@ -655,9 +654,9 @@ const trans = {
     "nav.pipeline": "Quy trình",
     "nav.cases": "Case Study",
     "nav.cta": "Liên hệ ngay",
-    "hero.eyebrow": "HẠ TẦNG DỮ LIỆU CHO HỆ THỐNG AI",
-    "hero.headline": "Tiếp sức cho hệ thống AI của bạn bằng <span>dữ liệu thực tế, ở quy mô lớn.</span>",
-    "hero.sub": "KOSData thu thập, gán nhãn và đóng gói dữ liệu con người &amp; môi trường chất lượng cao thành bộ dữ liệu sẵn sàng huấn luyện \u2014 để đội ngũ của bạn tập trung huấn luyện mô hình, không phải chạy theo dữ liệu.",
+    "hero.eyebrow": "DỮ LIỆU THỰC TẾ \u2014 KIẾN TẠO CHO AI",
+    "hero.headline": "Tiếp sức cho hệ thống AI của bạn bằng <span>dữ liệu thực tế</span>",
+    "hero.sub": "Chúng tôi tìm nguồn nhân lực, ghi hình bối cảnh thực tế, gán nhãn dữ liệu và bàn giao bộ dữ liệu sẵn sàng đưa vào sản xuất \u2014 để đội ngũ AI của bạn tiến nhanh hơn.",
     "hero.cta1": "Lên Kế Hoạch Pilot",
     "hero.tag1": "Thu Thập Dữ Liệu",
     "hero.tag2": "Gán Nhãn Dữ Liệu",
@@ -668,32 +667,32 @@ const trans = {
     "stats.label4": "Tỷ lệ hài lòng của khách hàng",
     "whatwedo.eyebrow": "Chúng tôi làm gì",
     "whatwedo.title": "<span class=\"accent\">Tất cả những gì bạn cần,</span> trong một nơi duy nhất.",
-    "whatwedo.sub": "Ba dịch vụ được tích hợp chặt chẽ để mở khóa toàn bộ tiềm năng của pipeline huấn luyện \u2014 từ thu thập dữ liệu thô đến bộ dữ liệu có thể cấp phép.",
+    "whatwedo.sub": "Ba dịch vụ tích hợp giúp mở khóa toàn bộ tiềm năng của pipeline huấn luyện của bạn",
     "svc1.title": "Thu Thập Dữ Liệu",
-    "svc1.desc": "Thu thập tận hiện trường ở mọi góc nhìn mô hình của bạn cần \u2014 quay tại chỗ, trong studio, hoặc qua mạng lưới cộng tác viên khắp APAC.",
-    "svc1.b1": "Quay đồng bộ đa camera, độ phân giải lên đến 4K/60fps",
-    "svc1.b2": "Bối cảnh vận hành thực tế, không phải dàn dựng",
+    "svc1.desc": "Ghi lại thế giới thực mà AI của bạn cần \u2014 con người, bối cảnh, hành động và tình huống, bất kể dữ liệu nằm ở đâu.",
+    "svc1.b1": "Quay đa camera, độ phân giải lên đến 4K/60fps",
+    "svc1.b2": "Bối cảnh chân thực. Hành vi đúng đời sống thật.",
     "svc1.b3": "Xử lý đồng thuận &amp; tuân thủ ngay tại hiện trường",
     "svc2.title": "Gán Nhãn Dữ Liệu",
-    "svc2.desc": "Quy trình gán nhãn được kiểm soát chất lượng trên sáu loại dữ liệu, tối ưu cho độ chính xác mà các đội robotics và computer vision cần.",
+    "svc2.desc": "Biến dữ liệu thô thành tri thức có cấu trúc nhờ gán nhãn chính xác, đội ngũ chuyên sâu theo lĩnh vực và kiểm soát chất lượng nhiều tầng.",
     "svc2.b1": "Gán nhãn ảnh, video, âm thanh, văn bản, 3D &amp; tài liệu",
-    "svc2.b2": "QA nhiều tầng, theo dõi độ đồng thuận giữa người gán nhãn",
-    "svc2.b3": "Giao theo định dạng sẵn sàng COCO / YOLO / VOC",
+    "svc2.b2": "QA nhiều tầng, đo lường được độ nhất quán khi gán nhãn",
+    "svc2.b3": "Giao theo định dạng chuẩn ngành, sẵn sàng cho mô hình",
     "svc3.title": "Bộ Dữ Liệu Huấn Luyện AI",
-    "svc3.desc": "Bộ dữ liệu dựng sẵn hoặc đặt hàng riêng, được lập tài liệu và đóng gói để có thể cấp phép sử dụng nhiều lần.",
+    "svc3.desc": "Bộ dữ liệu được xây dựng riêng theo mô hình, use case và quy mô của bạn \u2014 sẵn sàng tích hợp vào pipeline huấn luyện.",
     "svc3.b1": "Phục vụ robotics, computer vision, giọng nói &amp; ngôn ngữ",
-    "svc3.b2": "Sẵn sàng huấn luyện: HDF5/RLDS, COCO, YOLO, JSON",
+    "svc3.b2": "Xuất file sẵn sàng huấn luyện theo đúng định dạng bạn cần",
     "svc3.b3": "Tài liệu đầy đủ về thông số, đồng thuận &amp; chỉ số chất lượng",
     "advantage.eyebrow": "Vì sao chọn KOSData",
     "advantage.title": "Lịch sử của chúng tôi chính là lợi thế.",
-    "advantage.body": "KOSData là dòng dịch vụ mới nhất của KOS \u2014 kế thừa 20 năm vận hành nhân sự và cung ứng lao động sản xuất trên khắp Việt Nam. Nền tảng đó mang lại khả năng mở rộng nhanh, hiện diện trên toàn quốc, và đội ngũ đã am hiểu sẵn những ngành mà dữ liệu AI cần nhất.",
+    "advantage.body": "KOSData được xây dựng trên nền tảng hơn 20 năm kinh nghiệm vận hành nhân sự và sản xuất của KOS trên khắp Việt Nam. Điều đó nghĩa là chúng tôi không bắt đầu từ số 0: đã sẵn có con người, độ phủ địa phương, bí quyết vận hành và khả năng tiếp cận ngành cần thiết để triển khai các chương trình dữ liệu phức tạp ở quy mô lớn.",
     "advantage.industriesTitle": "Đã hoạt động trong chính những ngành <span class=\"accent\">đang dẫn đầu làn sóng ứng dụng AI</span>",
     "industry.1": "Sản Xuất &amp; Lắp Ráp",
     "industry.2": "Ngân Hàng &amp; Dịch Vụ Tài Chính",
     "industry.3": "Bán Lẻ &amp; Dịch Vụ Tiêu Dùng",
     "industry.4": "Logistics &amp; Kho Vận",
     "industry.5": "Khách Sạn &amp; Dịch Vụ Lưu Trú",
-    "advantage.stat1": "Năm kinh nghiệm trong các ngành dẫn đầu về AI",
+    "advantage.stat1": "20+ năm kinh nghiệm trong các ngành dẫn đầu về AI",
     "advantage.stat2": "Chi nhánh khắp miền Bắc Việt Nam",
     "advantage.stat3": "Thành viên trong cộng đồng của KOS",
     "advantage.stat4": "Đối tác &amp; cộng tác viên tuyển dụng",
@@ -728,7 +727,7 @@ const trans = {
     "case2.stat2": "Dây chuyền sản xuất",
     "case2.stat3": "Tuần để hoàn tất tuyển dụng",
     "cta.title": "Sẵn sàng tiếp sức cho hệ thống AI tiếp theo của bạn?",
-    "partners.title": "Được các đối tác tin tưởng hợp tác cùng KOS",
+    "partners.title": "Đối Tác Của Chúng Tôi",
     "cta.sub": "Chia sẻ yêu cầu của bạn \u2014 chúng tôi sẽ lên kế hoạch pilot chỉ trong vài ngày.",
     "form.name": "Tên của bạn",
     "form.namePh": "Nguyễn Văn A",
@@ -766,7 +765,7 @@ function showCase(i) {
 // ===== Lead form -> Google Sheets =====
 // 1. Deploy the Apps Script Web App described in the setup guide.
 // 2. Paste its /exec URL below, replacing the placeholder.
-const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxcLS3Rjbjxp6ElbCuITaZlUBTSXQh9NbGUYxTVHY3OUFwZ9Z4IdUbH7XQ53aYJoiC/exec";
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec";
 
 function submitLeadForm(e) {
   e.preventDefault();
@@ -792,6 +791,32 @@ function submitLeadForm(e) {
     });
   return false;
 }
+
+// ===== Partners logo grid =====
+// Just add/remove filenames below — the grid regenerates itself.
+// Put the matching image files in a "logo" folder next to this HTML file
+// (same folder + filenames you're already using on the main KOS site works as-is).
+// If a file is missing, it falls back to a text placeholder automatically.
+const partnerLogos = [
+  "VinFast.png", "VinEs.jfif", "Compal.webp", "Biel.jfif", "Spx.png", "Tinhloi.jfif",
+  "Pegatron.png", "Brother.webp", "Molex.png", "Usi.png", "Canon.webp", "Sumi.jfif",
+  "nissinmfg.png", "LG_Display.webp", "LGI.png", "Eurowindow.png", "Fushan.png", "Itm.png",
+  "Ariston.png", "Bandai.jfif", "Stavian.png", "Coasia.png", "Wnc.png", "Ways.jfif",
+  "Meiko.webp", "Viettel.webp", "Ramond.svg", "VPBank.webp", "Techcombank.png", "MB.png",
+  "FE_Credit.webp", "MIC.png", "Abbank.png", "SHV.png", "Fpt.png", "Vinapharm.jpg",
+  "Vinpalace.avif", "Fairmont.webp", "Ascott.webp", "Daewoo.png"
+];
+
+function renderPartners() {
+  const grid = document.getElementById('partners-grid');
+  if (!grid) return;
+  grid.innerHTML = partnerLogos.map(function(file) {
+    const name = file.substring(0, file.lastIndexOf('.'));
+    return '<img src="logo/' + file + '" alt="' + name + '" ' +
+      'onerror="this.onerror=null; this.src=\'https://placehold.co/150x50?text=' + encodeURIComponent(name) + '\'">';
+  }).join('');
+}
+renderPartners();
 
 function setLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
