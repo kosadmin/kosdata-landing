@@ -51,7 +51,7 @@
   .lang-switch button.active { background: var(--ink); color: var(--white); }
   .navcta { background: var(--ink); color: var(--white); padding: 9px 18px; border-radius: 4px; font-size: 14px; font-weight: 600; }
   .navcta:hover { background: var(--amber); }
-  @media (max-width: 760px) { .navlinks { display: none; } }
+  @media (max-width: 760px) { .navlinks { display: none; } .navcta { display: none; } }
 
   /* ---------- HERO ---------- */
   .hero { background: radial-gradient(ellipse 900px 500px at 75% 0%, var(--char-2), var(--ink) 70%); color: var(--white); padding: 96px 0 88px; position: relative; overflow: hidden; }
@@ -189,7 +189,11 @@
   .cta-text h2 { font-size: clamp(28px, 3.6vw, 38px); }
   .cta-text p { color: rgba(255,255,255,0.65); margin-top: 16px; font-size: 16px; }
   .lead-form { flex: 1 1 440px; max-width: 480px; margin: 0; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 10px; padding: 32px; }
-  @media (max-width: 860px) { .cta-grid { flex-direction: column; } .lead-form { max-width: 100%; width: 100%; } }
+  @media (max-width: 860px) {
+    .cta-grid { flex-direction: column; align-items: stretch; gap: 32px; }
+    .cta-text { flex: unset; }
+    .lead-form { max-width: 100%; width: 100%; flex: unset; }
+  }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-field { margin-bottom: 18px; }
   .form-field label { display:block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.75); margin-bottom: 7px; }
@@ -561,7 +565,7 @@
         </div>
       </div>
       <div class="footer-col">
-        <h4 class="footer-heading-lg" data-i18n="footer.companyName">K-Outsourcing Human Resources Solutions &amp; Investment Consulting Joint Stock Company</h4>
+        <h4 class="footer-heading-lg" data-i18n="footer.companyName"><span style="white-space:nowrap">K-Outsourcing</span> Human Resources Solutions &amp; Investment Consulting Joint Stock Company</h4>
         <div style="margin-top:12px" data-i18n="footer.address">Address: B-TT13-04, Ngan Ha Van Phuc Residential Area, Ha Dong District, Hanoi, Vietnam</div>
         <div data-i18n="footer.duns">DUNS Number: 673825772</div>
       </div>
@@ -669,7 +673,7 @@ const trans = {
     "form.note": "We typically respond within 1\u20132 business days.",
     "footer.tagline": "High-fidelity real-world data for robots and intelligent machines",
     "footer.contactTitle": "Contact",
-    "footer.companyName": "K-Outsourcing Human Resources Solutions &amp; Investment Consulting Joint Stock Company",
+    "footer.companyName": "<span style=\"white-space:nowrap\">K-Outsourcing</span> Human Resources Solutions &amp; Investment Consulting Joint Stock Company",
     "footer.address": "Address: B-TT13-04, Ngan Ha Van Phuc Residential Area, Ha Dong District, Hanoi, Vietnam",
     "footer.duns": "DUNS Number: 673825772",
     "footer.phoneLabel": "Phone:",
@@ -770,7 +774,7 @@ const trans = {
     "form.note": "Chúng tôi thường phản hồi trong vòng 1\u20132 ngày làm việc.",
     "footer.tagline": "Dữ liệu thực tế chất lượng cao cho robot và máy móc thông minh",
     "footer.contactTitle": "Liên hệ",
-    "footer.companyName": "Công ty Cổ phần Giải pháp Nhân sự &amp; Tư vấn Đầu tư K-Outsourcing",
+    "footer.companyName": "Công ty Cổ phần Giải pháp Nhân sự &amp; Tư vấn Đầu tư <span style=\"white-space:nowrap\">K-Outsourcing</span>",
     "footer.address": "Địa chỉ: B-TT13-04, Khu nhà ở Ngân Hà Vạn Phúc, Quận Hà Đông, TP Hà Nội, Việt Nam",
     "footer.duns": "Mã DUNS: 673825772",
     "footer.phoneLabel": "SĐT:",
